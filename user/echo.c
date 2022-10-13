@@ -2,9 +2,8 @@
 #include "kernel/stat.h"
 #include "user/user.h"
 
-int
-main(int argc, char *argv[])
-{
+//argc表示argv数组的长度，argv[0] = echo
+int main(int argc, char *argv[]) {
   int i;
 
   for(i = 1; i < argc; i++){
