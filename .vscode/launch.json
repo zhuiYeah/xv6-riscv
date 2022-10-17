@@ -1,0 +1,68 @@
+// {
+//     //本文件就是相当于在命令行里输入 /usr/local/bin/gdb  kernel/kernel
+//     "version": "0.2.0",
+//     "configurations": [
+
+//         {
+//             "name":"debug xv6",
+//             "type":"cppdbg", 
+//             "request":"launch",
+//             "program": "${workspaceFolder}/kernel/kernel",
+//             "args":[],
+//             "stopAtEntry": true,
+//             "cwd":"${workspaceFolder}$",
+//             "miDebuggerServerAddress": "localhost:25502",
+//             "miDebuggerPath": "/usr/local/bin/gdb",
+//             //"miDebuggerPath": "/usr/local/opt/riscv-gnu-toolchain/bin/riscv64-unknown-elf-gdb",
+//             "environment" :[],
+//             "externalConsole": false,
+//             "MIMode": "gdb",
+//             "setupCommands": [
+//                 {
+//                     "description": "pretty printing",
+//                     "text":"-enable-pretty-printing",
+//                     "ignoreFailures": true,
+//                 }
+//             ],
+//             "logging": {
+//                 "engineLogging": true,
+//                 "programOutput": true,
+//             } ,
+//             //"preLaunchTask": "make-gdb",
+
+//         }
+//     ]
+// }
+
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+    //本配置文件就是相当于在命令行里输入 /usr/local/opt/riscv-gnu-toolchain/bin/riscv64-unknown-elf-gdb  kernel/kernel
+            "name": "debug xv6",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/kernel/kernel",
+            "args": [],
+            "stopAtEntry": true,
+            "cwd": "${workspaceFolder}",
+            "miDebuggerServerAddress": "localhost:25502",
+            "miDebuggerPath": "/usr/local/opt/riscv-gnu-toolchain/bin/riscv64-unknown-elf-gdb",
+            "environment": [],
+            "externalConsole": true,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "pretty printing",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "logging": {
+                "engineLogging": true,
+                "programOutput": true,
+            }
+            // "preLaunchTask": "Open Terminal"
+        }
+    ]
+}
