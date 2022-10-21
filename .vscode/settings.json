@@ -16,7 +16,10 @@
         "user.h": "c",
         "cstdio": "c",
         "stdarg.h": "c",
-        "file.h": "c"
+        "file.h": "c",
+        "fs.h": "c",
+        "stat.h": "c",
+        "sysinfo.h": "c"
     },
     "C_Cpp.errorSquiggles": "Enabled"
 }

@@ -59,7 +59,7 @@ void procinit(void)
     }
 }
 
-// Must be called with interrupts disabled,
+// 必须在禁用中断的情况下调用
 // to prevent race with process being moved
 // to a different CPU.
 int cpuid()
@@ -69,7 +69,7 @@ int cpuid()
 }
 
 // Return this CPU's cpu struct.
-// Interrupts must be disabled.
+// 必须禁用中断
 struct cpu *
 mycpu(void)
 {
@@ -78,9 +78,8 @@ mycpu(void)
     return c;
 }
 
-// Return the current struct proc *, or zero if none.
-struct proc *
-myproc(void)
+// 返回当前的 struct proc * （进程状态），如果没有则返回零。
+struct proc *myproc(void)
 {
     push_off();
     struct cpu *c = mycpu();
@@ -105,8 +104,7 @@ int allocpid()
 // If found, initialize state required to run in the kernel,
 // and return with p->lock held.
 // If there are no free procs, or a memory allocation fails, return 0.
-static struct proc *
-allocproc(void)
+static struct proc *allocproc(void)
 {
     struct proc *p;
 
@@ -157,8 +155,7 @@ found:
 // free a proc structure and the data hanging from it,
 // including user pages.
 // p->lock must be held.
-static void
-freeproc(struct proc *p)
+static void freeproc(struct proc *p)
 {
     if (p->trapframe)
         kfree((void *)p->trapframe);
@@ -178,8 +175,7 @@ freeproc(struct proc *p)
 
 // Create a user page table for a given process, with no user memory,
 // but with trampoline and trapframe pages.
-pagetable_t
-proc_pagetable(struct proc *p)
+pagetable_t proc_pagetable(struct proc *p)
 {
     pagetable_t pagetable;
 
@@ -302,12 +298,16 @@ int fork(void)
         release(&np->lock);
         return -1;
     }
+    //设置子进程大小与父进程相同
     np->sz = p->sz;
+
+    //设置子进程的掩码，父进程要跟踪哪些系统调用，子进程也要跟踪一样的
+    np->mask = p->mask;
 
     // copy saved user registers.
     *(np->trapframe) = *(p->trapframe);
 
-    // Cause fork to return 0 in the child.
+    // Cause fork to return 0 in the child. a0这里又变成保存函数返回值的寄存器了
     np->trapframe->a0 = 0;
 
     // increment reference counts on open file descriptors.

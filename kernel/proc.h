@@ -1,9 +1,9 @@
-// Saved registers for kernel context switches.
+// 为 内核上下文切换 保存的 寄存器
 struct context {
   uint64 ra;
   uint64 sp;
 
-  // callee-saved
+  //被调用者保存寄存器
   uint64 s0;
   uint64 s1;
   uint64 s2;
@@ -41,8 +41,8 @@ extern struct cpu cpus[NCPU];
 // return-to-user path via usertrapret() doesn't return through
 // the entire kernel call stack.
 struct trapframe {
-  /*   0 */ uint64 kernel_satp;   // kernel page table
-  /*   8 */ uint64 kernel_sp;     // top of process's kernel stack
+  /*   0 */ uint64 kernel_satp;   // 内核页表
+  /*   8 */ uint64 kernel_sp;     // 进程内核栈的 栈顶
   /*  16 */ uint64 kernel_trap;   // usertrap()
   /*  24 */ uint64 epc;           // saved user program counter
   /*  32 */ uint64 kernel_hartid; // saved kernel tp
@@ -81,14 +81,14 @@ struct trapframe {
 
 enum procstate { UNUSED, USED, SLEEPING, RUNNABLE, RUNNING, ZOMBIE };
 
-// Per-process state
+// 每个进程的状态,我的理解就是进程存在的唯一标识PCB
 struct proc {
   struct spinlock lock;
 
   // p->lock must be held when using these:
-  enum procstate state;        // Process state
+  enum procstate state;        // 进程状态 （运行态、就绪态...）
   void *chan;                  // If non-zero, sleeping on chan
-  int killed;                  // If non-zero, have been killed
+  int killed;                  // 如果非零，则已被杀死
   int xstate;                  // Exit status to be returned to parent's wait
   int pid;                     // Process ID
 
@@ -96,12 +96,15 @@ struct proc {
   struct proc *parent;         // Parent process
 
   // these are private to the process, so p->lock need not be held.
-  uint64 kstack;               // Virtual address of kernel stack
-  uint64 sz;                   // Size of process memory (bytes)
-  pagetable_t pagetable;       // User page table
+  uint64 kstack;               // 内核栈的虚拟地址
+  uint64 sz;                   // 进程内存大小（字节）
+  pagetable_t pagetable;       // 用户页表
   struct trapframe *trapframe; // data page for trampoline.S
   struct context context;      // swtch() here to run process
   struct file *ofile[NOFILE];  // Open files
   struct inode *cwd;           // Current directory
   char name[16];               // Process name (debugging)
+
+  //为了实现trace syscall ，每个进程都必须有自己的掩码，以指示trace想要跟踪 该进程执行过程中的 哪些系统调用
+  int mask;
 };

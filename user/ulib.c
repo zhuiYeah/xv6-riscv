@@ -40,6 +40,7 @@ uint strlen(const char *s)
   return n;
 }
 
+//复制字符 c（一个无符号字符）到参数 dst 所指向的字符串的前 n 个字符
 void *
 memset(void *dst, int c, uint n)
 {

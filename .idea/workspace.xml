@@ -3,9 +3,9 @@
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
-  <component name="CMakePresetLoader"><![CDATA[{
-  "useNewFormat": true
-}]]></component>
+  <component name="CMakePresetLoader">{
+  &quot;useNewFormat&quot;: true
+}</component>
   <component name="CMakeRunConfigurationManager">
     <generated />
   </component>
@@ -15,20 +15,23 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d01912fa-ad9a-43fa-bdd9-1c89c90748d9" name="变更" comment="">
-      <change afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/xv6-riscv.iml" beforeDir="false" />
+    <list default="true" id="d01912fa-ad9a-43fa-bdd9-1c89c90748d9" name="变更" comment="Merge remote-tracking branch 'origin/riscv' into riscv">
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/在进行更新之前于_2022_10_19,_16_25_取消提交了变更_[变更]/shelved.patch" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vscode/settings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kernel/kalloc.c" beforeDir="false" afterPath="$PROJECT_DIR$/kernel/kalloc.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kernel/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/kernel/main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kernel/printf.c" beforeDir="false" afterPath="$PROJECT_DIR$/kernel/printf.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kernel/param.h" beforeDir="false" afterPath="$PROJECT_DIR$/kernel/param.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kernel/proc.c" beforeDir="false" afterPath="$PROJECT_DIR$/kernel/proc.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/echo.c" beforeDir="false" afterPath="$PROJECT_DIR$/user/echo.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/printf.c" beforeDir="false" afterPath="$PROJECT_DIR$/user/printf.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/rm.c" beforeDir="false" afterPath="$PROJECT_DIR$/user/rm.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kernel/proc.h" beforeDir="false" afterPath="$PROJECT_DIR$/kernel/proc.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kernel/stat.h" beforeDir="false" afterPath="$PROJECT_DIR$/kernel/stat.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kernel/syscall.c" beforeDir="false" afterPath="$PROJECT_DIR$/kernel/syscall.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kernel/syscall.h" beforeDir="false" afterPath="$PROJECT_DIR$/kernel/syscall.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kernel/sysproc.c" beforeDir="false" afterPath="$PROJECT_DIR$/kernel/sysproc.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/ls.c" beforeDir="false" afterPath="$PROJECT_DIR$/user/ls.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/pingpong.c" beforeDir="false" afterPath="$PROJECT_DIR$/user/pingpong.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/ulib.c" beforeDir="false" afterPath="$PROJECT_DIR$/user/ulib.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/umalloc.c" beforeDir="false" afterPath="$PROJECT_DIR$/user/umalloc.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/user.h" beforeDir="false" afterPath="$PROJECT_DIR$/user/user.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/usys.pl" beforeDir="false" afterPath="$PROJECT_DIR$/user/usys.pl" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,27 +76,38 @@
       </map>
     </option>
   </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectApplicationVersion">
     <option name="ide" value="CLion" />
     <option name="majorVersion" value="2022" />
     <option name="minorVersion" value="2.3" />
   </component>
   <component name="ProjectId" id="2GLV2Ph9fELXDPpw1cHdSf90XS2" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "last_opened_file_path": "/Users/he/CLionProjects/xv6-riscv"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/he/CLionProjects/xv6-riscv&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
@@ -109,8 +123,18 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1666167644183</updated>
-      <workItem from="1666167646101" duration="8000" />
+      <workItem from="1666167646101" duration="513000" />
+      <workItem from="1666249018472" duration="5000" />
+      <workItem from="1666347046470" duration="10000" />
     </task>
+    <task id="LOCAL-00001" summary="Merge remote-tracking branch 'origin/riscv' into riscv">
+      <created>1666167711924</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1666167711924</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -126,5 +150,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="Merge remote-tracking branch 'origin/riscv' into riscv" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge remote-tracking branch 'origin/riscv' into riscv" />
   </component>
 </project>
