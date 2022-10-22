@@ -1,3 +1,5 @@
+//来自lab2，需要你去内核里面实现trace系统调用
+
 /*实现系统调用函数 System call tracing
 在这个任务中，user/trace.c 文件已经给出，重点是内核态部分
 你将创建一个新的 trace 系统调用来控制跟踪。
@@ -49,7 +51,7 @@
 #include "kernel/stat.h"
 #include "user/user.h"
 
-//trace mask  command ..
+//trace mask  command .. 
 //例如 trace 32 grep hello README 
 //read的系统调用id是5 ， 而 1<<5 = 32 ;所以本条命令的意思是跟踪grep hello RADME 进行过程中的所有read系统调用
 //如果 mask 是 33 ；fork的系统调用id是1 ， 于是跟踪在命令执行过程中的 所有 read 、fork系统调用
@@ -63,7 +65,7 @@ int main(int argc, char *argv[])
         fprintf(2, "Usage: %s mask command ...\n", argv[0]);
         exit(1);
     }
-    //mask转换失败
+    //trace失败 。 注意到trace函数的参数为mask，这也是a0寄存器存放的东西。
     if (trace(atoi(argv[1])) < 0)
     {
         fprintf(2, "%s: trace failed\n", argv[0]);
@@ -80,6 +82,6 @@ int main(int argc, char *argv[])
     //执行要跟踪的子进程 ， 由于当前在trace进程中直接执行grep，于是grep夺舍了trace，占用了trace的pid
     exec(nargv[0], nargv);
 
-    //printf("trace成功结束并退出"); //这句话未执行，为什么？
+    //printf("trace成功结束并退出"); //这句话未执行，为什么？猜测与exec调用有关
     exit(1);
 }

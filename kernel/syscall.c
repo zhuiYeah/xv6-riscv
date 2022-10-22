@@ -1,4 +1,4 @@
-//syscall.c文件根据系统调用类型进入sysproc.c中的相应处理函数
+//syscall.c文件 根据系统调用id 进入sysproc.c、sysfile.c等文件中的相应处理函数
 
 #include "types.h"
 #include "param.h"
@@ -102,6 +102,7 @@ extern uint64 sys_link(void);
 extern uint64 sys_mkdir(void);
 extern uint64 sys_close(void);
 extern uint64 sys_trace(void);
+extern uint64 sys_sysinfo(void);
 
 // An array mapping syscall numbers from syscall.h to the function that handles the system call.
 //映射  syscall.h中的系统调用号 - > sysproc.c中的系统调用函数
@@ -128,9 +129,10 @@ static uint64 (*syscalls[])(void) = {
     [SYS_mkdir] sys_mkdir,
     [SYS_close] sys_close,
     [SYS_trace] sys_trace,
+    [SYS_sysinfo] sys_sysinfo,
 };
 
-//系统调用的函数名称没办法直接获取，因此创建了一个数组，用于存储系统调用的名称
+//系统调用的函数名称没办法直接获取，因此创建了一个数组，用于存储系统调用的名称。为了满足trace系统调用获得系统调用的名称所创建。
 char* syscalls_name[] = {
 [SYS_fork]    "fork",
 [SYS_exit]    "exit",
@@ -154,12 +156,12 @@ char* syscalls_name[] = {
 [SYS_mkdir]   "mkdir",
 [SYS_close]   "close",
 [SYS_trace]   "trace",
+[SYS_sysinfo] "sysinfo",
 };
 
 
-//根据系统调用类型进入sysproc.c中的相应处理函数
-void syscall(void)
-{
+//根据系统调用类型进入（例）sysproc.c 中的相应处理函数
+void syscall(void){
   int num;
   struct proc *p = myproc();
 
@@ -171,7 +173,7 @@ void syscall(void)
     // Use num to lookup the system call function for num, call it,
     // and store its return value in p->trapframe->a0 a0寄存器保存系统调用返回值
     p->trapframe->a0 = syscalls[num]();
-    //如果进程p的mask指示进程p跟踪该系统调用num , 那么打印跟踪信息
+    //如果进程p的mask指示进程p跟踪该系统调用num , 那么打印跟踪信息。为了满足trace系统调用所写。
     if (1 << num & p->mask)
     {
       printf("pid:%d 进程名:%s  调用了%s() syscall  -> %d \n", p->pid, p->name,syscalls_name[num] , p->trapframe->a0);

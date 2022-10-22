@@ -1,6 +1,6 @@
 /*
-sysproc.c 文件 ,与进程有关的系统调用
-从这里向寄存器取得 真正实现系统调用需要的参数，之后有可能需要转入proc.c 进行更复杂更细节的处理
+sysproc.c 文件 ,包含与进程有关的系统调用
+从这里向寄存器取得 真正实现系统调用需要的参数，之后有可能需要转入proc.c 进行更复杂更细节最底层的处理
 */
 
 #include "types.h"
@@ -10,7 +10,7 @@ sysproc.c 文件 ,与进程有关的系统调用
 #include "memlayout.h"
 #include "spinlock.h"
 #include "proc.h"
-
+#include "sysinfo.h"
 
 uint64 sys_exit(void)
 {
@@ -98,10 +98,28 @@ uint64 sys_trace(void)
 {
   //掩码，指示trace需要跟踪哪些系统调用
   int mask;
-  // a0寄存器保存着trace的第一个参数，也即mask
+  // a0寄存器保存着用户态函数trace（）的第一个参数，也即mask
   argint(0, &mask);
   if (mask < 0)
     return -1;
   myproc()->mask = mask;
+  return 0;
+}
+
+uint64 sys_sysinfo(void)
+{
+  struct sysinfo info;
+  uint64 addr;
+  struct proc *p = myproc();
+  //a0寄存器获得用户态函数sysinfo()的第一个参数，也即指向用户态创建的struct sysinfo的指针，将它读取出来；于是addr现在指向用户态用户地址空间的struct sysinfo
+  argaddr(0, &addr);
+  if (addr < 0)
+    return -1;
+  info.freemem = free_mem();
+  info.nproc = n_proc();
+  //将内核空间的info(也即当前的struct sysinfo info) 复制到 用户进程的info（addr指向改虚拟地址）
+  //copyout将内核空间的info信息复制到用户空间中
+  if (copyout(p->pagetable, addr, (char *)&info, sizeof(info)) < 0)
+    return -1;
   return 0;
 }

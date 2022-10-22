@@ -8,7 +8,7 @@
 
 struct cpu cpus[NCPU];
 
-struct proc proc[NPROC];
+struct proc proc[NPROC]; //该数组保存了所有进程
 
 struct proc *initproc;
 
@@ -706,4 +706,18 @@ void procdump(void)
         printf("%d %s %s", p->pid, state, p->name);
         printf("\n");
     }
+}
+
+//获得进程总数。为满足sysinfo系统调用所创建
+int n_proc(void)
+{
+    int res = 0;
+    struct proc *p;
+    // for (p = proc; p != 0; p++)
+    for (p = proc; p < &proc[NPROC]; p++)
+    {
+        if (p->state != UNUSED)
+            res++;
+    }
+    return res;
 }
