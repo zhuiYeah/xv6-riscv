@@ -351,7 +351,7 @@ typedef uint64 *pagetable_t; // 一个页表，指向512个PTEs。 这就是页�
 //标志这一页可执行
 #define PTE_X (1L << 3) //Executable
 //标志这一页用户有权限
-#define PTE_U (1L << 4) // user can access
+#define PTE_U (1L << 4) // user can access  
 
 // shift a physical address to the right place for a PTE.
 // 从物理地址pa获得页表项PTE

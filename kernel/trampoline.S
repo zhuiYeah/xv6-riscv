@@ -1,7 +1,7 @@
         #这段底层代码用来处理 从用户到内核的trap陷入，并从内核态返回到用户态
         # low-level code to handle traps from user space into
         # the kernel, and returns from kernel to user.
-        #
+        #  
         # 内核将保存此代码的页面映射到用户和内核空间中的相同虚拟地址（TRAMPOLINE），以便在切换页表时它继续工作。
         # the kernel maps the page holding this code
         # at the same virtual address (TRAMPOLINE)

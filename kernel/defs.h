@@ -1,5 +1,5 @@
-//记录了内核中所有需要被其他文件调用的函数
-
+//记录了内核中所有需要被其他文件调用的函数 
+ 
 struct buf;
 struct context;
 struct file;

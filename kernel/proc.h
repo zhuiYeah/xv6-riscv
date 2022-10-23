@@ -86,7 +86,7 @@ enum procstate { UNUSED, USED, SLEEPING, RUNNABLE, RUNNING, ZOMBIE };
 // 每个进程的状态,我的理解就是进程存在的唯一标识PCB
 struct proc {
   struct spinlock lock;
-  
+
   // p->lock must be held when using these:
   enum procstate state;        // 进程状态 （运行态、就绪态...）
   void *chan;                  // If non-zero, sleeping on chan
@@ -99,7 +99,7 @@ struct proc {
 
   // these are private to the process, so p->lock need not be held.
   uint64 kstack;               // 内核栈的虚拟地址
-  uint64 sz;                   // 进程内存大小（字节）
+  uint64 sz;                   // 进程内存大小（字节）  
   pagetable_t pagetable;       // 用户页表
   struct trapframe *trapframe; // data page for trampoline.S
   struct context context;      // swtch() here to run process

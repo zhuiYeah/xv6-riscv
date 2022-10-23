@@ -32,7 +32,7 @@ int exec(char *path, char **argv)
 
   if (p->pid == 1)
   {
-    printf("当前是进程 %d , 进程名为 %s\n",p->pid,p->name);
+    printf("当前是进程 %d , 进程名为 %s\n",p->pid,p->name);  
     printf("接下来打印当前进程的页表\n");
     vmprint(p->pagetable);
   }
