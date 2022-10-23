@@ -40,6 +40,8 @@ extern struct cpu cpus[NCPU];
 // the trapframe includes callee-saved user registers like s0-s11 because the
 // return-to-user path via usertrapret() doesn't return through
 // the entire kernel call stack.
+//这里存放着每个进程专门给trap处理程序trampoline.S使用的数据。
+//trapframe存放在 用户页表的trampoline的 下一页，没有特别映射在内核页表。
 struct trapframe {
   /*   0 */ uint64 kernel_satp;   // 内核页表
   /*   8 */ uint64 kernel_sp;     // 进程内核栈的 栈顶
@@ -84,7 +86,7 @@ enum procstate { UNUSED, USED, SLEEPING, RUNNABLE, RUNNING, ZOMBIE };
 // 每个进程的状态,我的理解就是进程存在的唯一标识PCB
 struct proc {
   struct spinlock lock;
-
+  
   // p->lock must be held when using these:
   enum procstate state;        // 进程状态 （运行态、就绪态...）
   void *chan;                  // If non-zero, sleeping on chan

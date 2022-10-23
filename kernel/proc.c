@@ -30,6 +30,7 @@ struct spinlock wait_lock;
 // Allocate a page for each process's kernel stack.
 // Map it high in memory, followed by an invalid
 // guard page.
+//为每个进程的内核栈分配一个页（为每个进程分配一个内核栈）。将其映射到内存中的高位，后面是一个无效的保护页。
 void proc_mapstacks(pagetable_t kpgtbl)
 {
     struct proc *p;

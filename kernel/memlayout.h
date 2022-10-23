@@ -1,4 +1,4 @@
-// Physical memory layout
+// 物理内存布局
 
 // qemu -machine virt is set up like this,
 // based on qemu's hw/riscv/virt.c:
@@ -14,8 +14,8 @@
 
 // the kernel uses physical memory thus:
 // 80000000 -- entry.S, then kernel text and data
-// end -- start of kernel page allocation area
-// PHYSTOP -- end RAM used by the kernel
+// end -- start of kernel page allocation area    内核使用内存的开始
+// PHYSTOP -- end RAM used by the kernel          内核使用内存的结束
 
 // qemu puts UART registers here in physical memory.
 #define UART0 0x10000000L
@@ -26,11 +26,13 @@
 #define VIRTIO0_IRQ 1
 
 // core local interruptor (CLINT), which contains the timer.
+//核心本地中断器 (CLINT)，其中包含计时器。
 #define CLINT 0x2000000L
 #define CLINT_MTIMECMP(hartid) (CLINT + 0x4000 + 8*(hartid))
 #define CLINT_MTIME (CLINT + 0xBFF8) // cycles since boot.
 
 // qemu puts platform-level interrupt controller (PLIC) here.
+//qemu 将平台级中断控制器（PLIC）放在这里
 #define PLIC 0x0c000000L
 #define PLIC_PRIORITY (PLIC + 0x0)
 #define PLIC_PENDING (PLIC + 0x1000)
@@ -44,23 +46,26 @@
 // the kernel expects there to be RAM
 // for use by the kernel and user pages
 // from physical address 0x80000000 to PHYSTOP.
+//该地址之后都是RAM，从这里开始到PHYSTOP结束，供内核页和用户页使用
 #define KERNBASE 0x80000000L
 #define PHYSTOP (KERNBASE + 128*1024*1024)
 
 // map the trampoline page to the highest address,
 // in both user and kernel space.
+//将trampoline(trap处理程序)映射到地址空间的最顶端（256GB处）,both user and kernel space.
 #define TRAMPOLINE (MAXVA - PGSIZE)
 
 // map kernel stacks beneath the trampoline,
 // each surrounded by invalid guard pages.
+//在TRAMPOLINE下映射内核栈，每个内核栈都被无效的保护页包围
 #define KSTACK(p) (TRAMPOLINE - ((p)+1)* 2*PGSIZE)
 
 // User memory layout.
 // Address zero first:
-//   text
-//   original data and bss
-//   fixed-size stack
-//   expandable heap
+//   text 代码段
+//   original data and bss 数据和只读数据
+//   fixed-size stack  固定大小栈
+//   expandable heap   堆
 //   ...
 //   TRAPFRAME (p->trapframe, used by the trampoline)
 //   TRAMPOLINE (the same page as in the kernel)

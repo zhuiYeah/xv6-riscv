@@ -1,10 +1,10 @@
 #ifndef __ASSEMBLER__
 
 // which hart (core) is this?
-static inline uint64
-r_mhartid()
+static inline uint64 r_mhartid()
 {
   uint64 x;
+  //c语言内嵌汇编
   asm volatile("csrr %0, mhartid" : "=r" (x) );
   return x;
 }
@@ -17,8 +17,7 @@ r_mhartid()
 #define MSTATUS_MPP_U (0L << 11)
 #define MSTATUS_MIE (1L << 3)    // machine-mode interrupt enable.
 
-static inline uint64
-r_mstatus()
+static inline uint64 r_mstatus()
 {
   uint64 x;
   asm volatile("csrr %0, mstatus" : "=r" (x) );
@@ -34,6 +33,7 @@ w_mstatus(uint64 x)
 // machine exception program counter, holds the
 // instruction address to which a return from
 // exception will go.
+//机器异常程序计数器，保存异常返回的指令地址
 static inline void 
 w_mepc(uint64 x)
 {
@@ -63,16 +63,14 @@ w_sstatus(uint64 x)
 }
 
 // Supervisor Interrupt Pending
-static inline uint64
-r_sip()
+static inline uint64 r_sip()
 {
   uint64 x;
   asm volatile("csrr %0, sip" : "=r" (x) );
   return x;
 }
 
-static inline void 
-w_sip(uint64 x)
+static inline void w_sip(uint64 x)
 {
   asm volatile("csrw sip, %0" : : "r" (x));
 }
@@ -116,6 +114,7 @@ w_mie(uint64 x)
 // supervisor exception program counter, holds the
 // instruction address to which a return from
 // exception will go.
+// 监督异常程序计数器，保存异常返回的指令地址。
 static inline void 
 w_sepc(uint64 x)
 {
@@ -183,7 +182,7 @@ w_mtvec(uint64 x)
   asm volatile("csrw mtvec, %0" : : "r" (x));
 }
 
-// Physical Memory Protection
+// Physical Memory Protection  物理内存保护
 static inline void
 w_pmpcfg0(uint64 x)
 {
@@ -196,13 +195,14 @@ w_pmpaddr0(uint64 x)
   asm volatile("csrw pmpaddr0, %0" : : "r" (x));
 }
 
-// use riscv's sv39 page table scheme.
+// 使用 riscv 的 sv39 页表方案。
 #define SATP_SV39 (8L << 60)
 
 #define MAKE_SATP(pagetable) (SATP_SV39 | (((uint64)pagetable) >> 12))
 
 // supervisor address translation and protection;
 // holds the address of the page table.
+//supervisor地址转换和保护；保存页表的地址。
 static inline void 
 w_satp(uint64 x)
 {
@@ -297,6 +297,7 @@ r_sp()
 
 // read and write tp, the thread pointer, which xv6 uses to hold
 // this core's hartid (core number), the index into cpus[].
+//读写线程指针tp。xv6 使用tp来保存核心编号，即cpus[] 的索引。
 static inline uint64
 r_tp()
 {
@@ -319,7 +320,7 @@ r_ra()
   return x;
 }
 
-// flush the TLB.
+// flush the TLB.刷新快表
 static inline void
 sfence_vma()
 {
@@ -327,31 +328,43 @@ sfence_vma()
   asm volatile("sfence.vma zero, zero");
 }
 
-typedef uint64 pte_t;
-typedef uint64 *pagetable_t; // 512 PTEs
+typedef uint64 pte_t;        //一个页表项
+typedef uint64 *pagetable_t; // 一个页表，指向512个PTEs。 这就是页表，是个指针，指向页表的第一个页表项
 
 #endif // __ASSEMBLER__
 
-#define PGSIZE 4096 // bytes per page
-#define PGSHIFT 12  // bits of offset within a page
+#define PGSIZE 4096 // bytes per page  一页4096B
+#define PGSHIFT 12  // bits of offset within a page  一个偏移量是12bit
 
+//PGROUNDUP 和 PGROUNDDOWN 是用于将发送到 PGSIZE 倍数的地址四舍五入的宏。通常用于获取页面对齐的地址。
+//PGROUNDUP 将把地址四舍五入为 PGSIZE 的较高倍数。
 #define PGROUNDUP(sz)  (((sz)+PGSIZE-1) & ~(PGSIZE-1))
+//而pgrounddown将地址四舍五入为 PGSIZE 的较低倍数
 #define PGROUNDDOWN(a) (((a)) & ~(PGSIZE-1))
 
+//标志这一页有效
 #define PTE_V (1L << 0) // valid
-#define PTE_R (1L << 1)
-#define PTE_W (1L << 2)
-#define PTE_X (1L << 3)
+//标志这一页可读
+#define PTE_R (1L << 1) //Readable
+//标志这一页可写
+#define PTE_W (1L << 2) //Writable
+//标志这一页可执行
+#define PTE_X (1L << 3) //Executable
+//标志这一页用户有权限
 #define PTE_U (1L << 4) // user can access
 
 // shift a physical address to the right place for a PTE.
+// 从物理地址pa获得页表项PTE
 #define PA2PTE(pa) ((((uint64)pa) >> 12) << 10)
 
+//从页表项PTE获得物理地址
 #define PTE2PA(pte) (((pte) >> 10) << 12)
 
+//得到PTE中的标志位，valid/可读/可写 ...
 #define PTE_FLAGS(pte) ((pte) & 0x3FF)
 
 // extract the three 9-bit page table indices from a virtual address.
+// 从一个虚拟地址中提取三个 9 位页表索引。（为什么这么做？ 参考sv39分页机制）
 #define PXMASK          0x1FF // 9 bits
 #define PXSHIFT(level)  (PGSHIFT+(9*(level)))
 #define PX(level, va) ((((uint64) (va)) >> PXSHIFT(level)) & PXMASK)
@@ -360,4 +373,5 @@ typedef uint64 *pagetable_t; // 512 PTEs
 // MAXVA is actually one bit less than the max allowed by
 // Sv39, to avoid having to sign-extend virtual addresses
 // that have the high bit set.
+//虚拟地址空间的最高位 256GB
 #define MAXVA (1L << (9 + 9 + 9 + 12 - 1))

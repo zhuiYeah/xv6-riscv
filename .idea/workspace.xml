@@ -15,15 +15,17 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d01912fa-ad9a-43fa-bdd9-1c89c90748d9" name="变更" comment="Merge remote-tracking branch 'origin/riscv' into riscv">
+    <list default="true" id="d01912fa-ad9a-43fa-bdd9-1c89c90748d9" name="变更" comment="lab2 syscall completed">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kernel/defs.h" beforeDir="false" afterPath="$PROJECT_DIR$/kernel/defs.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kernel/kalloc.c" beforeDir="false" afterPath="$PROJECT_DIR$/kernel/kalloc.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kernel/exec.c" beforeDir="false" afterPath="$PROJECT_DIR$/kernel/exec.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kernel/memlayout.h" beforeDir="false" afterPath="$PROJECT_DIR$/kernel/memlayout.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kernel/proc.c" beforeDir="false" afterPath="$PROJECT_DIR$/kernel/proc.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kernel/syscall.c" beforeDir="false" afterPath="$PROJECT_DIR$/kernel/syscall.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kernel/proc.h" beforeDir="false" afterPath="$PROJECT_DIR$/kernel/proc.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kernel/riscv.h" beforeDir="false" afterPath="$PROJECT_DIR$/kernel/riscv.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kernel/sysproc.c" beforeDir="false" afterPath="$PROJECT_DIR$/kernel/sysproc.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/sysinfotest.c" beforeDir="false" afterPath="$PROJECT_DIR$/user/sysinfotest.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/trace.c" beforeDir="false" afterPath="$PROJECT_DIR$/user/trace.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kernel/trampoline.S" beforeDir="false" afterPath="$PROJECT_DIR$/kernel/trampoline.S" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kernel/vm.c" beforeDir="false" afterPath="$PROJECT_DIR$/kernel/vm.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,13 +102,6 @@
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;
   }
 }</component>
-  <component name="RunManager">
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="默认任务">
@@ -118,7 +113,8 @@
       <workItem from="1666167646101" duration="513000" />
       <workItem from="1666249018472" duration="5000" />
       <workItem from="1666347046470" duration="190000" />
-      <workItem from="1666420383002" duration="1000" />
+      <workItem from="1666420383002" duration="505000" />
+      <workItem from="1666517979918" duration="2000" />
     </task>
     <task id="LOCAL-00001" summary="Merge remote-tracking branch 'origin/riscv' into riscv">
       <created>1666167711924</created>
@@ -134,7 +130,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666347114308</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="lab2 syscall completed">
+      <created>1666420475152</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1666420475152</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -154,6 +157,7 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Merge remote-tracking branch 'origin/riscv' into riscv" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge remote-tracking branch 'origin/riscv' into riscv" />
+    <MESSAGE value="lab2 syscall completed" />
+    <option name="LAST_COMMIT_MESSAGE" value="lab2 syscall completed" />
   </component>
 </project>

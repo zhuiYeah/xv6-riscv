@@ -117,7 +117,7 @@ uint64 sys_sysinfo(void)
     return -1;
   info.freemem = free_mem();
   info.nproc = n_proc();
-  //将内核空间的info(也即当前的struct sysinfo info) 复制到 用户进程的info（addr指向改虚拟地址）
+  //将内核空间的info(也即当前的struct sysinfo info) 复制到 用户进程的info（addr指向该虚拟地址）
   //copyout将内核空间的info信息复制到用户空间中
   if (copyout(p->pagetable, addr, (char *)&info, sizeof(info)) < 0)
     return -1;

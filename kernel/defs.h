@@ -1,3 +1,5 @@
+//记录了内核中所有需要被其他文件调用的函数
+
 struct buf;
 struct context;
 struct file;
@@ -175,6 +177,7 @@ uint64          walkaddr(pagetable_t, uint64);
 int             copyout(pagetable_t, uint64, char *, uint64);
 int             copyin(pagetable_t, char *, uint64, uint64);
 int             copyinstr(pagetable_t, char *, uint64, uint64);
+void            vmprint(pagetable_t);
 
 // plic.c
 void            plicinit(void);
