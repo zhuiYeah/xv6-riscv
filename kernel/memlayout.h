@@ -58,6 +58,7 @@
 // map kernel stacks beneath the trampoline,
 // each surrounded by invalid guard pages.
 //在TRAMPOLINE下映射内核栈，每个内核栈都被无效的保护页包围
+//给出当前进程p的指针，可以得到当前进程内核栈的虚拟地址
 #define KSTACK(p) (TRAMPOLINE - ((p)+1)* 2*PGSIZE)
 
 // User memory layout.

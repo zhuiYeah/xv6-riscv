@@ -1,4 +1,4 @@
-//记录了内核中所有需要被其他文件调用的函数 
+//记录了内核中一部分被其他文件调用的重要函数 
  
 struct buf;
 struct context;
@@ -109,7 +109,7 @@ void            yield(void);
 int             either_copyout(int user_dst, uint64 dst, void *src, uint64 len);
 int             either_copyin(void *dst, int user_src, uint64 src, uint64 len);
 void            procdump(void);
-int             n_proc(void); //为sysinfo调用所创建
+int             n_proc(void); //为sysinfo调用所创建,获得USED进程总数
 
 // swtch.S
 void            swtch(struct context*, struct context*);
@@ -177,7 +177,12 @@ uint64          walkaddr(pagetable_t, uint64);
 int             copyout(pagetable_t, uint64, char *, uint64);
 int             copyin(pagetable_t, char *, uint64, uint64);
 int             copyinstr(pagetable_t, char *, uint64, uint64);
-void            vmprint(pagetable_t);
+void            vmprint(pagetable_t);       //为lab3的打印页表实验 所创建
+pagetable_t     ukvminit(); //由kvminit() 以及kvmmake()改写而来. 为了lab3 A kernel page table per process 创建，用于初始化 per用户进程 独有的内核态页表，给陷入内核态的该进程使用
+void            ukvmmap(pagetable_t , uint64 , uint64 , uint64 ,int );//来自lab3.2 为 用户进程内核态页表 添加 页表项
+void            proc_freewalk(pagetable_t );  //来自lab3.2，释放 进程的内核页表 ,参考自freewalk()
+
+
 
 // plic.c
 void            plicinit(void);

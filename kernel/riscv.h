@@ -202,7 +202,7 @@ w_pmpaddr0(uint64 x)
 
 // supervisor address translation and protection;
 // holds the address of the page table.
-//supervisor地址转换和保护；保存页表的地址。
+//supervisor地址转换和保护；这是保存页表的地址。
 static inline void 
 w_satp(uint64 x)
 {

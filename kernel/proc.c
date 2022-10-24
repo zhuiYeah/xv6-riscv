@@ -31,7 +31,7 @@ struct spinlock wait_lock;
 // Map it high in memory, followed by an invalid
 // guard page.
 //为每个进程的内核栈分配一个页（为每个进程分配一个内核栈）。将其映射到内存中的高位，后面是一个无效的保护页。
-void proc_mapstacks(pagetable_t kpgtbl)  
+void proc_mapstacks(pagetable_t kpgtbl)
 {
     struct proc *p;
 
@@ -56,7 +56,8 @@ void procinit(void)
     {
         initlock(&p->lock, "proc");
         p->state = UNUSED;
-        p->kstack = KSTACK((int)(p - proc));
+        // //这里是 每个进程 内核栈的初始化 ,自lab 3.2之后，不在这里初始化进程的内核栈，而在allocproc()上分配进程内核页表和进程内核栈
+        // p->kstack = KSTACK((int)(p - proc));
     }
 }
 
@@ -71,8 +72,7 @@ int cpuid()
 
 // Return this CPU's cpu struct.
 // 必须禁用中断
-struct cpu *
-mycpu(void)
+struct cpu *mycpu(void)
 {
     int id = cpuid();
     struct cpu *c = &cpus[id];
@@ -105,6 +105,7 @@ int allocpid()
 // If found, initialize state required to run in the kernel,
 // and return with p->lock held.
 // If there are no free procs, or a memory allocation fails, return 0.
+//在进程表中查找 UNUSED proc。如果找到，将其初始化为 在内核中运行所要求的状态 ，并将该proc以有锁的状态返回
 static struct proc *allocproc(void)
 {
     struct proc *p;
@@ -144,6 +145,25 @@ found:
         return 0;
     }
 
+    //这段代码为 lab3 的A kernel page table per process 实验所创建，初始化 用户进程 的内核态页表
+    p->kpagetable = ukvminit();
+    if (p->kpagetable == 0)
+    {
+        freeproc(p);
+        release(&p->lock);
+        return 0;
+    }
+
+    //为lab3 的A kernel page table per process 实验所创建，
+    //目的是 初始化内核栈 并 让进程的内核页表 能映射到 该进程的 内核栈
+    //代码移植自 procinit()
+    void *pa = kalloc();
+    if (pa == 0)
+        panic("kalloc");
+    uint64 va = KSTACK((int)(p - proc));
+    p->kstack = va;
+    ukvmmap(p->kpagetable, va, (uint64)pa, PGSIZE, PTE_R | PTE_W);
+
     // Set up new context to start executing at forkret,
     // which returns to user space.
     memset(&p->context, 0, sizeof(p->context));
@@ -156,13 +176,33 @@ found:
 // free a proc structure and the data hanging from it,
 // including user pages.
 // p->lock must be held.
+//释放进程的 struct proc以及其中的所有数据。调用该函数时p必须持有锁
 static void freeproc(struct proc *p)
 {
+    //来自lab3.2。 释放内核栈 内存 。不释放 进程的内核页表吗? 释放，还没写呢别急
+    if (p->kstack)
+    {
+        pte_t* pte = walk(p->kpagetable, p->kstack, 0);
+        if (pte == 0)
+            panic("freeproc: walk");
+        kfree((void *)PTE2PA(*pte));
+    }
+    p->kstack = 0;
+
+    //释放进程的内核页表,来自lab3.2
+    if (p->kpagetable){
+        proc_freewalk(p->kpagetable);
+    }
+    p->kpagetable = 0;
+
     if (p->trapframe)
         kfree((void *)p->trapframe);
     p->trapframe = 0;
+
     if (p->pagetable)
+        //释放p进程的全部内存 ， 并释放它的用户页表
         proc_freepagetable(p->pagetable, p->sz);
+    
     p->pagetable = 0;
     p->sz = 0;
     p->pid = 0;
@@ -172,10 +212,12 @@ static void freeproc(struct proc *p)
     p->killed = 0;
     p->xstate = 0;
     p->state = UNUSED;
+    p->mask = 0;
 }
 
 // Create a user page table for a given process, with no user memory,
 // but with trampoline and trapframe pages.
+//为给定进程创建用户页表，但不分配用户内存（但是有trampoline 和 trapframe  pages）
 pagetable_t proc_pagetable(struct proc *p)
 {
     pagetable_t pagetable;
@@ -211,6 +253,7 @@ pagetable_t proc_pagetable(struct proc *p)
 
 // Free a process's page table, and free the
 // physical memory it refers to.
+//释放进程的 用户页表，并释放页表引用的物理内存（即进程全部内存）。
 void proc_freepagetable(pagetable_t pagetable, uint64 sz)
 {
     uvmunmap(pagetable, TRAMPOLINE, 1, 0);
@@ -450,13 +493,14 @@ int wait(uint64 addr)
     }
 }
 
-// Per-CPU process scheduler.
-// Each CPU calls scheduler() after setting itself up.
-// Scheduler never returns.  It loops, doing:
-//  - choose a process to run.
-//  - swtch to start running that process.
-//  - eventually that process transfers control
-//    via swtch back to the scheduler.
+/*
+这是每个cpu都有一个的调度程序
+每个cpu在初始化之后立刻调用自己的调度程序
+调度程序永远不会return，它循环做这些事情
+  - 选择要运行的进程
+  - swtch开始运行该进程
+  - 该进程通过swtch将cpu控制权交还给调度程序
+*/
 void scheduler(void)
 {
     struct proc *p;
@@ -467,7 +511,7 @@ void scheduler(void)
     {
         // Avoid deadlock by ensuring that devices can interrupt.
         intr_on();
-        int found = 0;
+        int found = 0; // qemu模拟器太占cpu，所以改了调度程序
         for (p = proc; p < &proc[NPROC]; p++)
         {
             acquire(&p->lock);
@@ -478,7 +522,12 @@ void scheduler(void)
                 // before jumping back to us.
                 p->state = RUNNING;
                 c->proc = p;
+
+                //来自lab3.2 修改Scheder () ：将进程的内核页表加载到core的satp 寄存器中。（进程调度时切换内核页,保证进程p执行的时候用的是进程内核页表）
+                w_satp(MAKE_SATP(p->kpagetable));
+                sfence_vma();
                 swtch(&c->context, &p->context);
+                kvminithart(); //并在调度后切换回来，修改satp为全局内核页表
 
                 // Process is done running for now.
                 // It should have changed its p->state before coming back.
@@ -488,6 +537,7 @@ void scheduler(void)
             release(&p->lock);
         }
 
+        // qemu模拟器太占cpu，所以改了调度程序
         if (found == 0)
         {
             intr_on();

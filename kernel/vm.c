@@ -6,6 +6,8 @@
 #include "riscv.h"
 #include "defs.h"
 #include "fs.h"
+#include "spinlock.h"  //为了lab3.2
+#include "proc.h"     //为了lab3.2
 
 /*
  * the kernel's page table.
@@ -17,7 +19,7 @@ extern char etext[]; // kernel.ld sets this to end of kernel code.
 extern char trampoline[]; // trampoline.S
 
 // Make a direct-map page table for the kernel.
-//为内核生成一个 直接映射 页表。
+//为内核生成一个 直接映射 页表，由kvminit()调用
 pagetable_t kvmmake(void)
 {
   pagetable_t kpgtbl;
@@ -50,7 +52,7 @@ pagetable_t kvmmake(void)
   return kpgtbl;
 }
 
-// 初始化内核页表（唯一的）
+//初始化内核页表（唯一的）
 void kvminit(void)
 {
   kernel_pagetable = kvmmake();
@@ -58,6 +60,7 @@ void kvminit(void)
 
 // Switch h/w page table register to the kernel's page table,
 // and enable paging.
+//修改satp为全局内核页表。在swtch返回之后调用
 void kvminithart()
 {
   // wait for any previous writes to the page table memory to finish.
@@ -294,7 +297,7 @@ void freewalk(pagetable_t pagetable)
     pte_t pte = pagetable[i];
     if ((pte & PTE_V) && (pte & (PTE_R | PTE_W | PTE_X)) == 0)
     {
-      //该页有效，但不可读不可写不可执行。表明该 PTE 指向一个较低级别的页表，递归进入它指向的下一层
+      //该页有效，但不可读不可写不可执行。表明该 PTE 指向一个较低级别（一级或二级）的页表，递归进入它指向的下一层
       // this PTE points to a lower-level page table.
       uint64 child = PTE2PA(pte);
       freewalk((pagetable_t)child);
@@ -303,18 +306,18 @@ void freewalk(pagetable_t pagetable)
     }
     else if (pte & PTE_V)
     {
-      //该页有效，且可读||可写||可执行(叶子页)，那么认为该页表不能被释放
+      //该页有效，且可读||可写||可执行(叶子页)，那么认为该页表不能被释放,说明不满足函数的调用条件，你把我页表释放了，那我这个进程就迷路了呀
       panic("freewalk: leaf");
     }
     //该页无效，不用处理
   }
-  // 512个页表项指向的内存全部被释放，释放当前页表 占用的内存
+  // 512个页表项指向的内存全部被释放，释放当前页表 
   kfree((void *)pagetable);
 }
 
 // Free user memory pages,
 // then free page-table pages.
-//释放用户占据的物理内存pages ，之后释放 它的页表占据的 物理内存pages
+//释放用户占据的物理内存pages 共sz字节 ，之后释放 它的页表
 void uvmfree(pagetable_t pagetable, uint64 sz)
 {
   if (sz > 0)
@@ -492,10 +495,10 @@ void _vmprint(pagetable_t pagetable, int level)
         printf(" .. ");
       }
       printf("%d :    pte %p     pa %p \n", i, pte, pa);
-      //如果不可读&&不可写&&可执行,那么就不是叶子页，继续往下递归
+      //如果不可读&&不可写&&不可执行,那么就不是叶子页，继续往下递归
       if ((pte & (PTE_R | PTE_W | PTE_W)) == 0)
       {
-        _vmprint((pagetable_t)pa,level+1);
+        _vmprint((pagetable_t)pa, level + 1);
       }
       // //也可以根据level页表级数来确定要不要递归，如果未到三级都需要往下一级递归。
       // if (level != 3)
@@ -511,4 +514,64 @@ void vmprint(pagetable_t pagetable)
 {
   printf("该页表的地址位于 : %p \n", pagetable);
   _vmprint(pagetable, 1);
-}  
+}
+
+// kvmmap()为内核页表添加一个页表项。仅在启动时使用。不刷新TLB、不启用分页,ukvmmap()由该函数改写而来
+//为了lab3 A kernel page table per process 创建，用于初始化 per用户进程 独有的内核态页表，给陷入内核态的该进程使用
+//为 用户进程内核页表 添加一个页表项
+void ukvmmap(pagetable_t kpagetable, uint64 va, uint64 pa, uint64 sz, int perm)
+{
+  if (mappages(kpagetable, va, sz, pa, perm) != 0)
+    panic("ukvmmap");
+}
+
+//由kvminit() 以及kvmmake()改写而来
+//为了lab3 A kernel page table per process 创建，用于初始化 per用户进程 独有的内核态页表，给陷入内核态的该进程使用
+pagetable_t ukvminit()
+{
+  // kvminit();
+  // kvmmake();
+  pagetable_t kpagetable;
+
+  kpagetable = (pagetable_t)kalloc();
+  memset(kpagetable, 0, PGSIZE);
+
+  ukvmmap(kpagetable, UART0, UART0, PGSIZE, PTE_R | PTE_W);
+
+  ukvmmap(kpagetable, VIRTIO0, VIRTIO0, PGSIZE, PTE_R | PTE_W);
+
+  ukvmmap(kpagetable, CLINT, CLINT, 0x10000, PTE_R | PTE_W);
+
+  ukvmmap(kpagetable, PLIC, PLIC, 0x400000, PTE_R | PTE_W);
+
+  ukvmmap(kpagetable, KERNBASE, KERNBASE, (uint64)etext - KERNBASE, PTE_R | PTE_X);
+
+  ukvmmap(kpagetable, (uint64)etext, (uint64)etext, PHYSTOP - (uint64)etext, PTE_R | PTE_W);
+
+  ukvmmap(kpagetable, TRAMPOLINE, (uint64)trampoline, PGSIZE, PTE_R | PTE_X);
+
+  return kpagetable;
+}
+
+// {
+//   freewalk();
+// }
+//释放 进程的内核页表,不释放物理页内存。来自lab3.2 ,参考freewalk();注意freewalk()函数仅释放了页表 ，调用freewalk()要保证所有叶子页已被删除
+//而该函数仅释放页表不要求叶子页已被删除，因为进程的内核页表只是进程的用户页表的一个备份，是让进程能够在陷入内核之后仍然摸得着路的手段
+void proc_freewalk(pagetable_t kpagetable)
+{
+  for (int i = 0; i < 512; i++)
+  {
+    pte_t pte = kpagetable[i];
+    if (pte & PTE_V)
+    {
+      kpagetable[i] = 0;
+      if ((pte & (PTE_R | PTE_W | PTE_U)) == 0)
+      {
+        uint64 child = PTE2PA(pte);
+        proc_freewalk((pagetable_t)child);
+      }
+    }
+  }
+  kfree((void *)kpagetable);
+}

@@ -109,4 +109,6 @@ struct proc {
 
   //为了实现trace syscall ，每个进程都必须有自己的掩码，以指示trace想要跟踪 该进程执行过程中的 哪些系统调用
   int mask;
+  //为了lab3的 A kernel page table per process构建的per-内核页表
+  pagetable_t kpagetable;
 };

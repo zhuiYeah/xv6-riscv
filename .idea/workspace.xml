@@ -15,16 +15,13 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d01912fa-ad9a-43fa-bdd9-1c89c90748d9" name="变更" comment="lab2 syscall completed">
+    <list default="true" id="d01912fa-ad9a-43fa-bdd9-1c89c90748d9" name="变更" comment="lab3 第一个实验打印页表完成">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kernel/defs.h" beforeDir="false" afterPath="$PROJECT_DIR$/kernel/defs.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kernel/exec.c" beforeDir="false" afterPath="$PROJECT_DIR$/kernel/exec.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kernel/memlayout.h" beforeDir="false" afterPath="$PROJECT_DIR$/kernel/memlayout.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kernel/proc.c" beforeDir="false" afterPath="$PROJECT_DIR$/kernel/proc.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kernel/proc.h" beforeDir="false" afterPath="$PROJECT_DIR$/kernel/proc.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kernel/riscv.h" beforeDir="false" afterPath="$PROJECT_DIR$/kernel/riscv.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kernel/sysproc.c" beforeDir="false" afterPath="$PROJECT_DIR$/kernel/sysproc.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kernel/trampoline.S" beforeDir="false" afterPath="$PROJECT_DIR$/kernel/trampoline.S" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kernel/vm.c" beforeDir="false" afterPath="$PROJECT_DIR$/kernel/vm.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -114,7 +111,8 @@
       <workItem from="1666249018472" duration="5000" />
       <workItem from="1666347046470" duration="190000" />
       <workItem from="1666420383002" duration="505000" />
-      <workItem from="1666517979918" duration="2000" />
+      <workItem from="1666517979918" duration="465000" />
+      <workItem from="1666578014938" duration="2000" />
     </task>
     <task id="LOCAL-00001" summary="Merge remote-tracking branch 'origin/riscv' into riscv">
       <created>1666167711924</created>
@@ -137,7 +135,21 @@
       <option name="project" value="LOCAL" />
       <updated>1666420475152</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="lab2 syscall completed">
+      <created>1666517999979</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1666517999979</updated>
+    </task>
+    <task id="LOCAL-00005" summary="lab3 第一个实验打印页表完成">
+      <created>1666518169337</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1666518169337</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -158,6 +170,7 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Merge remote-tracking branch 'origin/riscv' into riscv" />
     <MESSAGE value="lab2 syscall completed" />
-    <option name="LAST_COMMIT_MESSAGE" value="lab2 syscall completed" />
+    <MESSAGE value="lab3 第一个实验打印页表完成" />
+    <option name="LAST_COMMIT_MESSAGE" value="lab3 第一个实验打印页表完成" />
   </component>
 </project>
