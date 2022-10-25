@@ -286,6 +286,9 @@ void userinit(void)
     uvmfirst(p->pagetable, initcode, sizeof(initcode));
     p->sz = PGSIZE;
 
+    //来自lab3.3，进程用户页表复制到进程内核页表
+    u2kvmcopy(p->pagetable, p->kpagetable, 0, p->sz);
+
     // //将 第一个进程的用户页表的mapping 复制到进程内核页表中
     // pte_t *pte, *kernelPte;
     // pte = walk(p->pagetable, 0, 0);
@@ -306,12 +309,17 @@ void userinit(void)
 
 // Grow or shrink user memory by n bytes.
 // Return 0 on success, -1 on failure.
+//将用户内存增加或缩小n个字节。
 int growproc(int n)
 {
     uint64 sz;
     struct proc *p = myproc();
 
     sz = p->sz;
+     //来自lab3.3,避免在进程内核页表的分配过程中发生溢出。
+    if (PGROUNDUP(sz + n) >= PLIC)
+        return -1;
+        
     if (n > 0)
     {
         if ((sz = uvmalloc(p->pagetable, sz, sz + n, PTE_W)) == 0)
@@ -375,6 +383,9 @@ int fork(void)
         if (p->ofile[i])
             np->ofile[i] = filedup(p->ofile[i]);
     np->cwd = idup(p->cwd);
+
+    //来自lab3.3
+    u2kvmcopy(np->pagetable, np->kpagetable, 0, np->sz);
 
     safestrcpy(np->name, p->name, sizeof(p->name));
 

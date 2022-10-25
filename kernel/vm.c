@@ -331,7 +331,7 @@ void uvmfree(pagetable_t pagetable, uint64 sz)
 // physical memory.
 // returns 0 on success, -1 on failure.
 // frees any allocated pages on failure.
-//给定父进程的页表，将其内存复制到子进程的页表中。 不仅复制页表而且复制物理内存。
+//给定父进程的页表，将其内存复制到子进程的页表中。 不仅复制页表而且复制物理内存(用于fork())。
 int uvmcopy(pagetable_t old, pagetable_t new, uint64 sz)
 {
   pte_t *pte;
@@ -428,8 +428,8 @@ int copyin(pagetable_t pagetable, char *dst, uint64 srcva, uint64 len)
     dst += n;
     srcva = va0 + PGSIZE;
   }
-   return 0;
-  //return copyin_new(pagetable, dst, srcva, len);
+  return 0;
+  // return copyin_new(pagetable, dst, srcva, len);
 }
 
 // Copy a null-terminated string from user to kernel.
@@ -438,9 +438,9 @@ int copyin(pagetable_t pagetable, char *dst, uint64 srcva, uint64 len)
 // Return 0 on success, -1 on error.
 int copyinstr(pagetable_t pagetable, char *dst, uint64 srcva, uint64 max)
 {
-  //lab3.3对注释部分进行了升级，直接调用copyinstr_new()
-   uint64 n, va0, pa0;
-   int got_null = 0;
+  // lab3.3对注释部分进行了升级，直接调用copyinstr_new()
+  uint64 n, va0, pa0;
+  int got_null = 0;
 
   while (got_null == 0 && max > 0)
   {
@@ -481,7 +481,7 @@ int copyinstr(pagetable_t pagetable, char *dst, uint64 srcva, uint64 max)
   {
     return -1;
   }
-  //return copyinstr_new(pagetable, dst, srcva, max);
+  // return copyinstr_new(pagetable, dst, srcva, max);
 }
 
 //为了lab3 Print a page table  所创建
@@ -560,9 +560,7 @@ pagetable_t ukvminit()
   return kpagetable;
 }
 
-// {
 //   freewalk();
-// }
 //释放 进程的内核页表,不释放物理页内存。来自lab3.2 ,参考freewalk();注意freewalk()函数仅释放了页表 ，调用freewalk()要保证所有叶子页已被删除
 //而该函数仅释放页表不要求叶子页已被删除，因为进程的内核页表只是进程的用户页表的一个备份，是让进程能够在陷入内核之后仍然摸得着路的手段
 void proc_freewalk(pagetable_t kpagetable)
@@ -581,4 +579,20 @@ void proc_freewalk(pagetable_t kpagetable)
     }
   }
   kfree((void *)kpagetable);
+}
+
+// lab3.3，将进程用户页表复制到进程内核页表。
+void u2kvmcopy(pagetable_t upagetable, pagetable_t kpagetable, uint64 oldsz, uint64 newsz)
+{
+  oldsz = PGROUNDUP(oldsz);
+  for (uint64 i = oldsz; i < newsz; i += PGSIZE)
+  {
+    pte_t *pte_from = walk(upagetable, i, 0);
+    pte_t *pte_to = walk(kpagetable, i, 1);
+    if (pte_from == 0) panic("u2kvmcopy : src pte 不存在");
+    if (pte_to == 0) panic("u2kvmcopy : destpte walk failed ");
+    uint64 pa = PTE2PA(*pte_from);
+    uint flag = (PTE_FLAGS(*pte_from)) &  (~PTE_U);
+    *pte_to = PA2PTE(pa) | flag;
+  }
 }

@@ -93,11 +93,14 @@ int exec(char *path, char **argv)
   uint64 sz1;
   if ((sz1 = uvmalloc(pagetable, sz, sz + 2 * PGSIZE, PTE_W)) == 0)
     goto bad;
-  //  
+  //
   sz = sz1;
   uvmclear(pagetable, sz - 2 * PGSIZE);
   sp = sz;
   stackbase = sp - PGSIZE;
+
+  //来自lab3.3,在初始化之后，在执行新的程序之前，进行进程内核页表的拷贝
+  u2kvmcopy(pagetable, p->kpagetable, 0, sz);
 
   // Push argument strings, prepare rest of stack in ustack.
   for (argc = 0; argv[argc]; argc++)

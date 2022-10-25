@@ -41,6 +41,7 @@ uint64 sys_wait(void)
   return wait(p);
 }
 
+//从堆中分配内存？
 uint64 sys_sbrk(void)
 {
   uint64 addr;
