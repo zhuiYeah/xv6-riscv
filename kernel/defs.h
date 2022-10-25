@@ -183,6 +183,12 @@ void            ukvmmap(pagetable_t , uint64 , uint64 , uint64 ,int );//来自la
 void            proc_freewalk(pagetable_t );  //来自lab3.2，释放 进程的内核页表 ,参考自freewalk()
 
 
+//vmcopyin.c ,但是由于我不会为内核添加新文件，暂时先写入vm.c
+int             copyin_new(pagetable_t , char *, uint64 , uint64 );//来自lab3.3，精简了copyin的实现（在内核可以直接使用用户指针后)
+int             copyinstr_new(pagetable_t , char *, uint64 , uint64);//来自lab3.3，精简了copyinstr的实现
+
+// sprintf.c
+int             snprintf(char*, int, char*, ...);//来自lab3.3
 
 // plic.c
 void            plicinit(void);

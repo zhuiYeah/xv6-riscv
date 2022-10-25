@@ -19,7 +19,9 @@
         "file.h": "c",
         "fs.h": "c",
         "stat.h": "c",
-        "sysinfo.h": "c"
+        "sysinfo.h": "c",
+        "spinlock.h": "c",
+        "defs.h": "c"
     },
     "C_Cpp.errorSquiggles": "Enabled"
 }

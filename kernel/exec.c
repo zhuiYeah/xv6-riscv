@@ -32,7 +32,7 @@ int exec(char *path, char **argv)
 
   if (p->pid == 1)
   {
-    printf("当前是进程 %d , 进程名为 %s\n",p->pid,p->name);  
+    printf("当前是进程 %d , 进程名为 %s\n", p->pid, p->name);
     printf("接下来打印当前进程的页表\n");
     vmprint(p->pagetable);
   }
@@ -72,6 +72,9 @@ int exec(char *path, char **argv)
     uint64 sz1;
     if ((sz1 = uvmalloc(pagetable, sz, ph.vaddr + ph.memsz, flags2perm(ph.flags))) == 0)
       goto bad;
+    //来自lab3.3，添加用户空间地址不能大于PLIC的判断
+    if (sz1 > PLIC)
+      goto bad;
     sz = sz1;
     if (loadseg(pagetable, ph.vaddr, ip, ph.off, ph.filesz) < 0)
       goto bad;
@@ -90,6 +93,7 @@ int exec(char *path, char **argv)
   uint64 sz1;
   if ((sz1 = uvmalloc(pagetable, sz, sz + 2 * PGSIZE, PTE_W)) == 0)
     goto bad;
+  //  
   sz = sz1;
   uvmclear(pagetable, sz - 2 * PGSIZE);
   sp = sz;
@@ -107,6 +111,17 @@ int exec(char *path, char **argv)
     if (copyout(pagetable, sp, argv[argc], strlen(argv[argc]) + 1) < 0)
       goto bad;
     ustack[argc] = sp;
+
+    // //来自lab3.3释放进程旧内核页表的mapping.
+    // uvmunmap(p->kpagetable, 0, PGROUNDUP(oldsz) / PGSIZE, 0);
+    // //将进程用户页表的mapping，复制一份到进程内核页表
+    // pte_t *pte, *kernelPte;
+    // for (int j = 0; j < sz; j += PGSIZE)
+    // {
+    //   pte = walk(p->pagetable, j, 0);
+    //   kernelPte = walk(p->kpagetable, j, 1);
+    //   *kernelPte = (*pte) & ~PTE_U;
+    // }
   }
   ustack[argc] = 0;
 

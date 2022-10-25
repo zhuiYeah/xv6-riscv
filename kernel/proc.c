@@ -10,7 +10,7 @@ struct cpu cpus[NCPU];
 
 struct proc proc[NPROC]; //该数组保存了所有进程
 
-struct proc *initproc;
+struct proc *initproc; //用户初始进程
 
 int nextpid = 1;
 struct spinlock pid_lock;
@@ -182,7 +182,7 @@ static void freeproc(struct proc *p)
     //来自lab3.2。 释放内核栈 内存 。不释放 进程的内核页表吗? 释放，还没写呢别急
     if (p->kstack)
     {
-        pte_t* pte = walk(p->kpagetable, p->kstack, 0);
+        pte_t *pte = walk(p->kpagetable, p->kstack, 0);
         if (pte == 0)
             panic("freeproc: walk");
         kfree((void *)PTE2PA(*pte));
@@ -190,7 +190,8 @@ static void freeproc(struct proc *p)
     p->kstack = 0;
 
     //释放进程的内核页表,来自lab3.2
-    if (p->kpagetable){
+    if (p->kpagetable)
+    {
         proc_freewalk(p->kpagetable);
     }
     p->kpagetable = 0;
@@ -202,7 +203,7 @@ static void freeproc(struct proc *p)
     if (p->pagetable)
         //释放p进程的全部内存 ， 并释放它的用户页表
         proc_freepagetable(p->pagetable, p->sz);
-    
+
     p->pagetable = 0;
     p->sz = 0;
     p->pid = 0;
@@ -273,7 +274,7 @@ uchar initcode[] = {
     0x74, 0x00, 0x00, 0x24, 0x00, 0x00, 0x00, 0x00,
     0x00, 0x00, 0x00, 0x00};
 
-// Set up first user process.
+// 设置第一个用户进程
 void userinit(void)
 {
     struct proc *p;
@@ -281,10 +282,15 @@ void userinit(void)
     p = allocproc();
     initproc = p;
 
-    // allocate one user page and copy initcode's instructions
-    // and data into it.
+    //分配一个用户页，并将initcode的指令和数据复制到其中
     uvmfirst(p->pagetable, initcode, sizeof(initcode));
     p->sz = PGSIZE;
+
+    // //将 第一个进程的用户页表的mapping 复制到进程内核页表中
+    // pte_t *pte, *kernelPte;
+    // pte = walk(p->pagetable, 0, 0);
+    // kernelPte = walk(p->kpagetable, 0, 1);
+    // *kernelPte = (*pte) & ~PTE_U;
 
     // prepare for the very first "return" from kernel to user.
     p->trapframe->epc = 0;     // user program counter
@@ -342,6 +348,16 @@ int fork(void)
         release(&np->lock);
         return -1;
     }
+
+    // //将进程用户页表的mapping,复制一份到进程内核页表中
+    // pte_t *pte , *kernelPte;
+    // for (uint64 j = 0; j < p->sz; j += PGSIZE)
+    // {
+    //     pte = walk(np->pagetable,j,0);
+    //     kernelPte = walk(np->kpagetable,j,1);
+    //     *kernelPte = (*pte) & ~PTE_U;
+    // }
+
     //设置子进程大小与父进程相同
     np->sz = p->sz;
 

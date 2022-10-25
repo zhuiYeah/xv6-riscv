@@ -6,7 +6,7 @@
 #include "riscv.h"
 #include "defs.h"
 #include "fs.h"
-#include "spinlock.h"  //为了lab3.2
+#include "spinlock.h" //为了lab3.2
 #include "proc.h"     //为了lab3.2
 
 /*
@@ -136,7 +136,7 @@ uint64 walkaddr(pagetable_t pagetable, uint64 va)
 // add a mapping to the kernel page table.
 // only used when booting.
 // does not flush TLB or enable paging.
-//为内核页表添加一个页表项。仅在启动时使用。不刷新TLB、不启用分页
+//为系统唯一内核页表添加一个页表项。仅在启动时使用。不刷新TLB、不启用分页
 void kvmmap(pagetable_t kpgtbl, uint64 va, uint64 pa, uint64 sz, int perm)
 {
   if (mappages(kpgtbl, va, sz, pa, perm) != 0)
@@ -270,7 +270,7 @@ uint64 uvmalloc(pagetable_t pagetable, uint64 oldsz, uint64 newsz, int xperm)
 // newsz.  oldsz and newsz need not be page-aligned, nor does newsz
 // need to be less than oldsz.  oldsz can be larger than the actual
 // process size.  Returns the new process size.
-//释放用户页面以将进程大小从oldsz变为newsz。oldsz和 newsz不需要是页面对齐的，newsz也不需要小于oldsz。oldsz 可以大于实际进程大小。返回新的进程大小。
+//释放用户页面以将进程大小从oldsz变为newsz。oldsz和 newsz不需要是页面对齐的，newsz也不需要小于oldsz。oldsz可以大于实际进程大小。返回新的进程大小。
 uint64 uvmdealloc(pagetable_t pagetable, uint64 oldsz, uint64 newsz)
 {
   if (newsz >= oldsz)
@@ -311,7 +311,7 @@ void freewalk(pagetable_t pagetable)
     }
     //该页无效，不用处理
   }
-  // 512个页表项指向的内存全部被释放，释放当前页表 
+  // 512个页表项指向的内存全部被释放，释放当前页表
   kfree((void *)pagetable);
 }
 
@@ -331,6 +331,7 @@ void uvmfree(pagetable_t pagetable, uint64 sz)
 // physical memory.
 // returns 0 on success, -1 on failure.
 // frees any allocated pages on failure.
+//给定父进程的页表，将其内存复制到子进程的页表中。 不仅复制页表而且复制物理内存。
 int uvmcopy(pagetable_t old, pagetable_t new, uint64 sz)
 {
   pte_t *pte;
@@ -405,12 +406,15 @@ int copyout(pagetable_t pagetable, uint64 dstva, char *src, uint64 len)
 // Copy len bytes to dst from virtual address srcva in a given page table.
 // Return 0 on success, -1 on error.
 //从用户复制到内核。将 虚拟地址的srcva处 长为len的数据复制到 内核的dst处。
+//实现方法是用walkaddr()把用户虚拟指针转化为内核可以直接使用的物理指针,在lab3.3中升级成为了copyin_new()。
 int copyin(pagetable_t pagetable, char *dst, uint64 srcva, uint64 len)
 {
   uint64 n, va0, pa0;
 
+  //这里为了达成长度len需要遍历用户页表。所以lab3.3对他进行升级,直接调用copyin_new();
   while (len > 0)
   {
+    //向下对齐
     va0 = PGROUNDDOWN(srcva);
     pa0 = walkaddr(pagetable, va0);
     if (pa0 == 0)
@@ -424,7 +428,8 @@ int copyin(pagetable_t pagetable, char *dst, uint64 srcva, uint64 len)
     dst += n;
     srcva = va0 + PGSIZE;
   }
-  return 0;
+   return 0;
+  //return copyin_new(pagetable, dst, srcva, len);
 }
 
 // Copy a null-terminated string from user to kernel.
@@ -433,8 +438,9 @@ int copyin(pagetable_t pagetable, char *dst, uint64 srcva, uint64 len)
 // Return 0 on success, -1 on error.
 int copyinstr(pagetable_t pagetable, char *dst, uint64 srcva, uint64 max)
 {
-  uint64 n, va0, pa0;
-  int got_null = 0;
+  //lab3.3对注释部分进行了升级，直接调用copyinstr_new()
+   uint64 n, va0, pa0;
+   int got_null = 0;
 
   while (got_null == 0 && max > 0)
   {
@@ -475,6 +481,7 @@ int copyinstr(pagetable_t pagetable, char *dst, uint64 srcva, uint64 max)
   {
     return -1;
   }
+  //return copyinstr_new(pagetable, dst, srcva, max);
 }
 
 //为了lab3 Print a page table  所创建
@@ -516,7 +523,7 @@ void vmprint(pagetable_t pagetable)
   _vmprint(pagetable, 1);
 }
 
-// kvmmap()为内核页表添加一个页表项。仅在启动时使用。不刷新TLB、不启用分页,ukvmmap()由该函数改写而来
+// kvmmap()为系统内核页表添加一个页表项。仅在启动时使用。不刷新TLB、不启用分页,ukvmmap()由该函数改写而来
 //为了lab3 A kernel page table per process 创建，用于初始化 per用户进程 独有的内核态页表，给陷入内核态的该进程使用
 //为 用户进程内核页表 添加一个页表项
 void ukvmmap(pagetable_t kpagetable, uint64 va, uint64 pa, uint64 sz, int perm)

@@ -50,6 +50,27 @@ uint64 sys_sbrk(void)
   addr = myproc()->sz;
   if (growproc(n) < 0)
     return -1;
+
+  // //来自lab3.3,在内存扩张、缩小时，相应更改进程内核页表
+  // struct proc *p = myproc();
+  // pte_t *pte, *kernelPte;
+  // if (n > 0)
+  // {
+  //   //将进程用户页表的mapping，复制一份到进程内核页表
+  //   for (int j = addr; j < addr + n; j += PGSIZE)
+  //   {
+  //     pte = walk(p->pagetable, j, 0);
+  //     kernelPte = walk(p->kpagetable, j, 1);
+  //     *kernelPte = (*pte) & ~PTE_U;
+  //   }
+  // }
+  // else
+  // {
+  //   for (int j = addr - PGSIZE; j >= addr + n; j -= PGSIZE)
+  //   {
+  //     uvmunmap(p->kpagetable, j, 1, 0);
+  //   }
+  // }
   return addr;
 }
 
@@ -111,14 +132,14 @@ uint64 sys_sysinfo(void)
   struct sysinfo info;
   uint64 addr;
   struct proc *p = myproc();
-  //a0寄存器获得用户态函数sysinfo()的第一个参数，也即指向用户态创建的struct sysinfo的指针，将它读取出来；于是addr现在指向用户态用户地址空间的struct sysinfo
+  // a0寄存器获得用户态函数sysinfo()的第一个参数，也即指向用户态创建的struct sysinfo的指针，将它读取出来；于是addr现在指向用户态用户地址空间的struct sysinfo
   argaddr(0, &addr);
   if (addr < 0)
     return -1;
   info.freemem = free_mem();
   info.nproc = n_proc();
   //将内核空间的info(也即当前的struct sysinfo info) 复制到 用户进程的info（addr指向该虚拟地址）
-  //copyout将内核空间的info信息复制到用户空间中  
+  // copyout将内核空间的info信息复制到用户空间中
   if (copyout(p->pagetable, addr, (char *)&info, sizeof(info)) < 0)
     return -1;
   return 0;
