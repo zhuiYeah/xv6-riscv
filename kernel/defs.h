@@ -83,6 +83,7 @@ int             pipewrite(struct pipe*, uint64, int);
 void            printf(char*, ...);
 void            panic(char*) __attribute__((noreturn));
 void            printfinit(void);
+void            backtrace(void); //来自lab4.2
 
 // proc.c
 int             cpuid(void);
@@ -185,7 +186,7 @@ void            u2kvmcopy(pagetable_t , pagetable_t , uint64 , uint64 );//来自
 
 
 
-//vmcopyin.c ,但是由于我不会为内核添加新文件，暂时先写入vm.c.
+//vmcopyin.c 
 int             copyin_new(pagetable_t , char *, uint64 , uint64 );//来自lab3.3，精简了copyin的实现（在内核可以直接使用用户指针后)
 int             copyinstr_new(pagetable_t , char *, uint64 , uint64);//来自lab3.3，精简了copyinstr的实现
 

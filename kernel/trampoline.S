@@ -1,8 +1,8 @@
-        #这段底层代码用来处理 从用户到内核的trap陷入，并从内核态返回到用户态
+        #这段底层代码用来处理 从用户到内核的trap陷入，在处理完trap陷入之后，负责并从内核态返回到用户态
         # low-level code to handle traps from user space into
         # the kernel, and returns from kernel to user.
         #  
-        # 内核将保存此代码的页面映射到用户和内核空间中的相同虚拟地址（TRAMPOLINE），以便在切换页表时它继续工作。
+        # 内核将保存此代码的页 映射到 用户和内核空间中的相同虚拟地址（TRAMPOLINE），以便在切换页表时它继续工作。
         # the kernel maps the page holding this code
         # at the same virtual address (TRAMPOLINE)
         # in user and kernel space so that it continues
@@ -25,10 +25,10 @@ uservec:
         # traps from user space start here,
         # in supervisor mode, but with a
         # user page table.
-        #
+        # trap.c将stvec寄存器（trap处理代码的入口地址）设置为指向此处，于是来自用户态的trap从这开始并进入内核态。
 
         # save user a0 in sscratch so
-        # a0 can be used to get at TRAPFRAME.
+        # a0 can be used to get at TRAPFRAME. a0 可用于获取 TRAPFRAME。
         csrw sscratch, a0
 
         # each process has a separate p->trapframe memory area,
@@ -37,6 +37,7 @@ uservec:
         li a0, TRAPFRAME
         
         # save the user registers in TRAPFRAME
+        # 将user registers保存在TRAPFRAME中
         sd ra, 40(a0)
         sd sp, 48(a0)
         sd gp, 56(a0)
@@ -68,11 +69,11 @@ uservec:
         sd t5, 272(a0)
         sd t6, 280(a0)
 
-	# save the user a0 in p->trapframe->a0
+        #将用户a0寄存器保存在 p->trapframe->a0中
         csrr t0, sscratch
         sd t0, 112(a0)
 
-        # initialize kernel stack pointer, from p->trapframe->kernel_sp
+        # 从 p->traoframe->kernel_sp 初始化内核栈指针
         ld sp, 8(a0)
 
         # make tp hold the current hartid, from p->trapframe->kernel_hartid
@@ -83,10 +84,12 @@ uservec:
 
 
         # fetch the kernel page table address, from p->trapframe->kernel_satp.
+        #从 p->trapframe->kernel_satp 获取系统内核页表地址
         ld t1, 0(a0)
 
         # wait for any previous memory operations to complete, so that
         # they use the user page table.
+        #等待先前的内存操作全部完成，以便它们使用用户页表。
         sfence.vma zero, zero
 
         # install the kernel page table.
@@ -104,15 +107,16 @@ userret:
         # called by usertrapret() in trap.c to
         # switch from kernel to user.
         # a0: user page table, for satp.
+        #为了从内核切换到用户，trap.c中的usertrapret()会调用这里的userret(pagetable)
 
-        # switch to the user page table.
+        # switch to the user page table. 切换回进程用户页表
         sfence.vma zero, zero
         csrw satp, a0
         sfence.vma zero, zero
 
         li a0, TRAPFRAME
 
-        # restore all but a0 from TRAPFRAME
+        # restore all but a0 from TRAPFRAME 从 TRAPFRAME 恢复除 a0 之外的所有内容
         ld ra, 40(a0)
         ld sp, 48(a0)
         ld gp, 56(a0)
@@ -144,9 +148,10 @@ userret:
         ld t5, 272(a0)
         ld t6, 280(a0)
 
-	# restore user a0
+	# restore user a0 利用完a0寄存器读取TRAPFRAME后，最后再恢复a0寄存器
         ld a0, 112(a0)
         
         # return to user mode and user pc.
         # usertrapret() set up sstatus and sepc.
+        #回到用户态。usertrapret()设置了sstatus(Trap陷入最重要的寄存器)寄存器和sepc(程序计数器)寄存器
         sret

@@ -16,15 +16,13 @@ void kernelvec();
 
 extern int devintr();
 
-void
-trapinit(void)
+void trapinit(void)
 {
   initlock(&tickslock, "time");
 }
 
 // set up to take exceptions and traps while in the kernel.
-void
-trapinithart(void)
+void trapinithart(void)
 {
   w_stvec((uint64)kernelvec);
 }
@@ -33,8 +31,8 @@ trapinithart(void)
 // handle an interrupt, exception, or system call from user space.
 // called from trampoline.S
 //
-void
-usertrap(void)
+//处理来自用户空间的中断、异常或系统调用。 从trampoline.S调用
+void usertrap(void)
 {
   int which_dev = 0;
 
@@ -86,8 +84,7 @@ usertrap(void)
 //
 // return to user space
 //
-void
-usertrapret(void)
+void usertrapret(void)
 {
   struct proc *p = myproc();
 
@@ -131,8 +128,8 @@ usertrapret(void)
 
 // interrupts and exceptions from kernel code go here via kernelvec,
 // on whatever the current kernel stack is.
-void 
-kerneltrap()
+//来自内核代码的中断和异常通过kernelvec到达这里，无论当前内核堆栈是什么。
+void kerneltrap()
 {
   int which_dev = 0;
   uint64 sepc = r_sepc();
@@ -160,8 +157,7 @@ kerneltrap()
   w_sstatus(sstatus);
 }
 
-void
-clockintr()
+void clockintr()
 {
   acquire(&tickslock);
   ticks++;
@@ -174,8 +170,8 @@ clockintr()
 // returns 2 if timer interrupt,
 // 1 if other device,
 // 0 if not recognized.
-int
-devintr()
+//检查是外部中断还是软件中断，并处理。
+int devintr()
 {
   uint64 scause = r_scause();
 

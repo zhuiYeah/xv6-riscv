@@ -21,7 +21,8 @@
         "stat.h": "c",
         "sysinfo.h": "c",
         "spinlock.h": "c",
-        "defs.h": "c"
+        "defs.h": "c",
+        "riscv.h": "c"
     },
     "C_Cpp.errorSquiggles": "Enabled"
 }

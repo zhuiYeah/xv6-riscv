@@ -93,6 +93,7 @@ uint64 sys_sleep(void)
     sleep(&ticks, &tickslock);
   }
   release(&tickslock);
+  backtrace();//来自lab4.2
   return 0;
 }
 

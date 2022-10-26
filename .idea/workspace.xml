@@ -15,16 +15,24 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d01912fa-ad9a-43fa-bdd9-1c89c90748d9" name="变更" comment="lab3.3  准备工作就绪">
+    <list default="true" id="d01912fa-ad9a-43fa-bdd9-1c89c90748d9" name="变更" comment="lab3.3  进程用户页表 -&gt; 进程内核页表的复制  完成">
+      <change afterPath="$PROJECT_DIR$/grade-lab-traps" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gradelib.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user/call.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/在进行更新之前于_2022_10_19,_16_25_取消提交了变更_[变更]/shelved.patch" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vscode/settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/CMakeFiles/CMakeError.log" beforeDir="false" afterPath="$PROJECT_DIR$/build/CMakeFiles/CMakeError.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/build/CMakeFiles/CMakeOutput.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kernel/defs.h" beforeDir="false" afterPath="$PROJECT_DIR$/kernel/defs.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kernel/exec.c" beforeDir="false" afterPath="$PROJECT_DIR$/kernel/exec.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kernel/proc.c" beforeDir="false" afterPath="$PROJECT_DIR$/kernel/proc.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kernel/printf.c" beforeDir="false" afterPath="$PROJECT_DIR$/kernel/printf.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kernel/riscv.h" beforeDir="false" afterPath="$PROJECT_DIR$/kernel/riscv.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kernel/sysproc.c" beforeDir="false" afterPath="$PROJECT_DIR$/kernel/sysproc.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kernel/vm.c" beforeDir="false" afterPath="$PROJECT_DIR$/kernel/vm.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kernel/vmcopyin.c" beforeDir="false" afterPath="$PROJECT_DIR$/kernel/vmcopyin.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kernel/trampoline.S" beforeDir="false" afterPath="$PROJECT_DIR$/kernel/trampoline.S" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kernel/trap.c" beforeDir="false" afterPath="$PROJECT_DIR$/kernel/trap.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testpointer" beforeDir="false" afterPath="$PROJECT_DIR$/testpointer" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/printf.c" beforeDir="false" afterPath="$PROJECT_DIR$/user/printf.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,6 +109,13 @@
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;
   }
 }</component>
+  <component name="RunManager">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="默认任务">
@@ -116,7 +131,8 @@
       <workItem from="1666517979918" duration="465000" />
       <workItem from="1666578014938" duration="270000" />
       <workItem from="1666691518957" duration="48000" />
-      <workItem from="1666697143027" duration="3000" />
+      <workItem from="1666697143027" duration="492000" />
+      <workItem from="1666788447671" duration="63000" />
     </task>
     <task id="LOCAL-00001" summary="Merge remote-tracking branch 'origin/riscv' into riscv">
       <created>1666167711924</created>
@@ -167,7 +183,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666691548340</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="lab3.3  进程用户页表 -&gt; 进程内核页表的复制  完成">
+      <created>1666697193755</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1666697193755</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -191,6 +214,7 @@
     <MESSAGE value="lab3 第一个实验打印页表完成" />
     <MESSAGE value="lab3.2  A kernel page table per process 完成" />
     <MESSAGE value="lab3.3  准备工作就绪" />
-    <option name="LAST_COMMIT_MESSAGE" value="lab3.3  准备工作就绪" />
+    <MESSAGE value="lab3.3  进程用户页表 -&gt; 进程内核页表的复制  完成" />
+    <option name="LAST_COMMIT_MESSAGE" value="lab3.3  进程用户页表 -&gt; 进程内核页表的复制  完成" />
   </component>
 </project>

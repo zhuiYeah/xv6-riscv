@@ -655,3 +655,149 @@ ninja: build stopped: subcommand failed.
 
 
 
+Detecting C compiler ABI info failed to compile with the following output:
+Change Dir: /Users/he/CLionProjects/xv6-riscv/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/local/bin/ninja cmTC_b8d66 && [1/2] Building C object CMakeFiles/cmTC_b8d66.dir/CMakeCCompilerABI.c.o
+Using built-in specs.
+COLLECT_GCC=/usr/local/opt/riscv-gnu-toolchain/bin/riscv64-unknown-elf-gcc
+Target: riscv64-unknown-elf
+Configured with: /Users/he/riscv-gnu-toolchain/gcc/configure --target=riscv64-unknown-elf --prefix=/usr/local/opt/riscv-gnu-toolchain --disable-shared --disable-threads --enable-languages=c,c++ --with-pkgversion=g2ee5e430018 --with-system-zlib --enable-tls --with-newlib --with-sysroot=/usr/local/opt/riscv-gnu-toolchain/riscv64-unknown-elf --with-native-system-header-dir=/include --disable-libmudflap --disable-libssp --disable-libquadmath --disable-libgomp --disable-nls --disable-tm-clone-registry --src=/Users/he/riscv-gnu-toolchain/gcc --disable-multilib --with-abi=lp64d --with-arch=rv64imafdc --with-tune=rocket --with-isa-spec=2.2 'CFLAGS_FOR_TARGET=-Os   -mcmodel=medlow' 'CXXFLAGS_FOR_TARGET=-Os   -mcmodel=medlow'
+Thread model: single
+Supported LTO compression algorithms: zlib zstd
+gcc version 12.2.0 (g2ee5e430018) 
+COLLECT_GCC_OPTIONS='-isysroot' '/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk' '-v' '-o' 'CMakeFiles/cmTC_b8d66.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=rocket' '-march=rv64imafdc' '-mabi=lp64d' '-misa-spec=2.2' '-march=rv64imafdc' '-dumpdir' 'CMakeFiles/cmTC_b8d66.dir/'
+ /usr/local/opt/riscv-gnu-toolchain/libexec/gcc/riscv64-unknown-elf/12.2.0/cc1 -quiet -v -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk /usr/local/Cellar/cmake/3.24.2/share/cmake/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_b8d66.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=rocket -march=rv64imafdc -mabi=lp64d -misa-spec=2.2 -march=rv64imafdc -version -o /var/folders/6h/x918t_nn4pv_7jp4m2rp_yv80000gp/T//ccIWBC9X.s
+GNU C17 (g2ee5e430018) version 12.2.0 (riscv64-unknown-elf)
+	compiled by GNU C version Apple LLVM 13.1.6 (clang-1316.0.21.2.5), GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version isl-0.24-GMP
+
+GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+ignoring nonexistent directory "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/usr/local/include"
+ignoring nonexistent directory "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/include"
+#include "..." search starts here:
+#include <...> search starts here:
+ /usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/include
+ /usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/include-fixed
+ /usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/../../../../riscv64-unknown-elf/include
+End of search list.
+GNU C17 (g2ee5e430018) version 12.2.0 (riscv64-unknown-elf)
+	compiled by GNU C version Apple LLVM 13.1.6 (clang-1316.0.21.2.5), GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version isl-0.24-GMP
+
+GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+Compiler executable checksum: 33db9c30c24156278be1c6a4d88c0c87
+COLLECT_GCC_OPTIONS='-isysroot' '/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk' '-v' '-o' 'CMakeFiles/cmTC_b8d66.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=rocket' '-march=rv64imafdc' '-mabi=lp64d' '-misa-spec=2.2' '-march=rv64imafdc' '-dumpdir' 'CMakeFiles/cmTC_b8d66.dir/'
+ /usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/../../../../riscv64-unknown-elf/bin/as -v --traditional-format -march=rv64imafdc -march=rv64imafdc -mabi=lp64d -misa-spec=2.2 -o CMakeFiles/cmTC_b8d66.dir/CMakeCCompilerABI.c.o /var/folders/6h/x918t_nn4pv_7jp4m2rp_yv80000gp/T//ccIWBC9X.s
+GNU assembler version 2.39 (riscv64-unknown-elf) using BFD version (GNU Binutils) 2.39
+COMPILER_PATH=/usr/local/opt/riscv-gnu-toolchain/libexec/gcc/riscv64-unknown-elf/12.2.0/:/usr/local/opt/riscv-gnu-toolchain/libexec/gcc/riscv64-unknown-elf/12.2.0/:/usr/local/opt/riscv-gnu-toolchain/libexec/gcc/riscv64-unknown-elf/:/usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/:/usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/:/usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/../../../../riscv64-unknown-elf/bin/
+LIBRARY_PATH=/usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/:/usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/../../../../riscv64-unknown-elf/lib/:/usr/local/opt/riscv-gnu-toolchain/riscv64-unknown-elf/lib/
+COLLECT_GCC_OPTIONS='-isysroot' '/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk' '-v' '-o' 'CMakeFiles/cmTC_b8d66.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=rocket' '-march=rv64imafdc' '-mabi=lp64d' '-misa-spec=2.2' '-march=rv64imafdc' '-dumpdir' 'CMakeFiles/cmTC_b8d66.dir/CMakeCCompilerABI.c.'
+[2/2] Linking C executable cmTC_b8d66
+FAILED: cmTC_b8d66 
+: && /usr/local/opt/riscv-gnu-toolchain/bin/riscv64-unknown-elf-gcc -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names -v -Wl,-v CMakeFiles/cmTC_b8d66.dir/CMakeCCompilerABI.c.o -o cmTC_b8d66   && :
+Using built-in specs.
+COLLECT_GCC=/usr/local/opt/riscv-gnu-toolchain/bin/riscv64-unknown-elf-gcc
+COLLECT_LTO_WRAPPER=/usr/local/opt/riscv-gnu-toolchain/libexec/gcc/riscv64-unknown-elf/12.2.0/lto-wrapper
+Target: riscv64-unknown-elf
+Configured with: /Users/he/riscv-gnu-toolchain/gcc/configure --target=riscv64-unknown-elf --prefix=/usr/local/opt/riscv-gnu-toolchain --disable-shared --disable-threads --enable-languages=c,c++ --with-pkgversion=g2ee5e430018 --with-system-zlib --enable-tls --with-newlib --with-sysroot=/usr/local/opt/riscv-gnu-toolchain/riscv64-unknown-elf --with-native-system-header-dir=/include --disable-libmudflap --disable-libssp --disable-libquadmath --disable-libgomp --disable-nls --disable-tm-clone-registry --src=/Users/he/riscv-gnu-toolchain/gcc --disable-multilib --with-abi=lp64d --with-arch=rv64imafdc --with-tune=rocket --with-isa-spec=2.2 'CFLAGS_FOR_TARGET=-Os   -mcmodel=medlow' 'CXXFLAGS_FOR_TARGET=-Os   -mcmodel=medlow'
+Thread model: single
+Supported LTO compression algorithms: zlib zstd
+gcc version 12.2.0 (g2ee5e430018) 
+COMPILER_PATH=/usr/local/opt/riscv-gnu-toolchain/libexec/gcc/riscv64-unknown-elf/12.2.0/:/usr/local/opt/riscv-gnu-toolchain/libexec/gcc/riscv64-unknown-elf/12.2.0/:/usr/local/opt/riscv-gnu-toolchain/libexec/gcc/riscv64-unknown-elf/:/usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/:/usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/:/usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/../../../../riscv64-unknown-elf/bin/
+LIBRARY_PATH=/usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/:/usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/../../../../riscv64-unknown-elf/lib/:/usr/local/opt/riscv-gnu-toolchain/riscv64-unknown-elf/lib/
+COLLECT_GCC_OPTIONS='-isysroot' '/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk' '-v' '-o' 'cmTC_b8d66' '-mtune=rocket' '-march=rv64imafdc' '-mabi=lp64d' '-misa-spec=2.2' '-march=rv64imafdc' '-dumpdir' 'cmTC_b8d66.'
+ /usr/local/opt/riscv-gnu-toolchain/libexec/gcc/riscv64-unknown-elf/12.2.0/collect2 -plugin /usr/local/opt/riscv-gnu-toolchain/libexec/gcc/riscv64-unknown-elf/12.2.0/liblto_plugin.so -plugin-opt=/usr/local/opt/riscv-gnu-toolchain/libexec/gcc/riscv64-unknown-elf/12.2.0/lto-wrapper -plugin-opt=-fresolution=/var/folders/6h/x918t_nn4pv_7jp4m2rp_yv80000gp/T//ccoL98sC.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgloss -plugin-opt=-pass-through=-lgcc --sysroot=/usr/local/opt/riscv-gnu-toolchain/riscv64-unknown-elf -melf64lriscv -o cmTC_b8d66 /usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/../../../../riscv64-unknown-elf/lib/crt0.o /usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/crtbegin.o -L/usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0 -L/usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/../../../../riscv64-unknown-elf/lib -L/usr/local/opt/riscv-gnu-toolchain/riscv64-unknown-elf/lib -search_paths_first -headerpad_max_install_names -v CMakeFiles/cmTC_b8d66.dir/CMakeCCompilerABI.c.o -lgcc --start-group -lc -lgloss --end-group -lgcc /usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/crtend.o
+collect2 version 12.2.0
+/usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/../../../../riscv64-unknown-elf/bin/ld -plugin /usr/local/opt/riscv-gnu-toolchain/libexec/gcc/riscv64-unknown-elf/12.2.0/liblto_plugin.so -plugin-opt=/usr/local/opt/riscv-gnu-toolchain/libexec/gcc/riscv64-unknown-elf/12.2.0/lto-wrapper -plugin-opt=-fresolution=/var/folders/6h/x918t_nn4pv_7jp4m2rp_yv80000gp/T//ccoL98sC.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgloss -plugin-opt=-pass-through=-lgcc --sysroot=/usr/local/opt/riscv-gnu-toolchain/riscv64-unknown-elf -melf64lriscv -o cmTC_b8d66 /usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/../../../../riscv64-unknown-elf/lib/crt0.o /usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/crtbegin.o -L/usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0 -L/usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/../../../../riscv64-unknown-elf/lib -L/usr/local/opt/riscv-gnu-toolchain/riscv64-unknown-elf/lib -search_paths_first -headerpad_max_install_names -v CMakeFiles/cmTC_b8d66.dir/CMakeCCompilerABI.c.o -lgcc --start-group -lc -lgloss --end-group -lgcc /usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/crtend.o
+/usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/../../../../riscv64-unknown-elf/bin/ld: Error: unable to disambiguate: -search_paths_first (did you mean --search_paths_first ?)
+collect2: error: ld returned 1 exit status
+ninja: build stopped: subcommand failed.
+
+
+
+
+Determining if the C compiler works failed with the following output:
+Change Dir: /Users/he/CLionProjects/xv6-riscv/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/local/bin/ninja cmTC_7fbdd && [1/2] Building C object CMakeFiles/cmTC_7fbdd.dir/testCCompiler.c.o
+[2/2] Linking C executable cmTC_7fbdd
+FAILED: cmTC_7fbdd 
+: && /usr/local/opt/riscv-gnu-toolchain/bin/riscv64-unknown-elf-gcc -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/cmTC_7fbdd.dir/testCCompiler.c.o -o cmTC_7fbdd   && :
+/usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/../../../../riscv64-unknown-elf/bin/ld: Error: unable to disambiguate: -search_paths_first (did you mean --search_paths_first ?)
+collect2: error: ld returned 1 exit status
+ninja: build stopped: subcommand failed.
+
+
+
+Detecting C compiler ABI info failed to compile with the following output:
+Change Dir: /Users/he/CLionProjects/xv6-riscv/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/local/bin/ninja cmTC_ca4d2 && [1/2] Building C object CMakeFiles/cmTC_ca4d2.dir/CMakeCCompilerABI.c.o
+Using built-in specs.
+COLLECT_GCC=/usr/local/opt/riscv-gnu-toolchain/bin/riscv64-unknown-elf-gcc
+Target: riscv64-unknown-elf
+Configured with: /Users/he/riscv-gnu-toolchain/gcc/configure --target=riscv64-unknown-elf --prefix=/usr/local/opt/riscv-gnu-toolchain --disable-shared --disable-threads --enable-languages=c,c++ --with-pkgversion=g2ee5e430018 --with-system-zlib --enable-tls --with-newlib --with-sysroot=/usr/local/opt/riscv-gnu-toolchain/riscv64-unknown-elf --with-native-system-header-dir=/include --disable-libmudflap --disable-libssp --disable-libquadmath --disable-libgomp --disable-nls --disable-tm-clone-registry --src=/Users/he/riscv-gnu-toolchain/gcc --disable-multilib --with-abi=lp64d --with-arch=rv64imafdc --with-tune=rocket --with-isa-spec=2.2 'CFLAGS_FOR_TARGET=-Os   -mcmodel=medlow' 'CXXFLAGS_FOR_TARGET=-Os   -mcmodel=medlow'
+Thread model: single
+Supported LTO compression algorithms: zlib zstd
+gcc version 12.2.0 (g2ee5e430018) 
+COLLECT_GCC_OPTIONS='-isysroot' '/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk' '-v' '-o' 'CMakeFiles/cmTC_ca4d2.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=rocket' '-march=rv64imafdc' '-mabi=lp64d' '-misa-spec=2.2' '-march=rv64imafdc' '-dumpdir' 'CMakeFiles/cmTC_ca4d2.dir/'
+ /usr/local/opt/riscv-gnu-toolchain/libexec/gcc/riscv64-unknown-elf/12.2.0/cc1 -quiet -v -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk /usr/local/Cellar/cmake/3.24.2/share/cmake/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_ca4d2.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=rocket -march=rv64imafdc -mabi=lp64d -misa-spec=2.2 -march=rv64imafdc -version -o /var/folders/6h/x918t_nn4pv_7jp4m2rp_yv80000gp/T//cc0CcYFk.s
+GNU C17 (g2ee5e430018) version 12.2.0 (riscv64-unknown-elf)
+	compiled by GNU C version Apple LLVM 13.1.6 (clang-1316.0.21.2.5), GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version isl-0.24-GMP
+
+GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+ignoring nonexistent directory "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/usr/local/include"
+ignoring nonexistent directory "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/include"
+#include "..." search starts here:
+#include <...> search starts here:
+ /usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/include
+ /usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/include-fixed
+ /usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/../../../../riscv64-unknown-elf/include
+End of search list.
+GNU C17 (g2ee5e430018) version 12.2.0 (riscv64-unknown-elf)
+	compiled by GNU C version Apple LLVM 13.1.6 (clang-1316.0.21.2.5), GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version isl-0.24-GMP
+
+GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+Compiler executable checksum: 33db9c30c24156278be1c6a4d88c0c87
+COLLECT_GCC_OPTIONS='-isysroot' '/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk' '-v' '-o' 'CMakeFiles/cmTC_ca4d2.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=rocket' '-march=rv64imafdc' '-mabi=lp64d' '-misa-spec=2.2' '-march=rv64imafdc' '-dumpdir' 'CMakeFiles/cmTC_ca4d2.dir/'
+ /usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/../../../../riscv64-unknown-elf/bin/as -v --traditional-format -march=rv64imafdc -march=rv64imafdc -mabi=lp64d -misa-spec=2.2 -o CMakeFiles/cmTC_ca4d2.dir/CMakeCCompilerABI.c.o /var/folders/6h/x918t_nn4pv_7jp4m2rp_yv80000gp/T//cc0CcYFk.s
+GNU assembler version 2.39 (riscv64-unknown-elf) using BFD version (GNU Binutils) 2.39
+COMPILER_PATH=/usr/local/opt/riscv-gnu-toolchain/libexec/gcc/riscv64-unknown-elf/12.2.0/:/usr/local/opt/riscv-gnu-toolchain/libexec/gcc/riscv64-unknown-elf/12.2.0/:/usr/local/opt/riscv-gnu-toolchain/libexec/gcc/riscv64-unknown-elf/:/usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/:/usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/:/usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/../../../../riscv64-unknown-elf/bin/
+LIBRARY_PATH=/usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/:/usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/../../../../riscv64-unknown-elf/lib/:/usr/local/opt/riscv-gnu-toolchain/riscv64-unknown-elf/lib/
+COLLECT_GCC_OPTIONS='-isysroot' '/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk' '-v' '-o' 'CMakeFiles/cmTC_ca4d2.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=rocket' '-march=rv64imafdc' '-mabi=lp64d' '-misa-spec=2.2' '-march=rv64imafdc' '-dumpdir' 'CMakeFiles/cmTC_ca4d2.dir/CMakeCCompilerABI.c.'
+[2/2] Linking C executable cmTC_ca4d2
+FAILED: cmTC_ca4d2 
+: && /usr/local/opt/riscv-gnu-toolchain/bin/riscv64-unknown-elf-gcc -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names -v -Wl,-v CMakeFiles/cmTC_ca4d2.dir/CMakeCCompilerABI.c.o -o cmTC_ca4d2   && :
+Using built-in specs.
+COLLECT_GCC=/usr/local/opt/riscv-gnu-toolchain/bin/riscv64-unknown-elf-gcc
+COLLECT_LTO_WRAPPER=/usr/local/opt/riscv-gnu-toolchain/libexec/gcc/riscv64-unknown-elf/12.2.0/lto-wrapper
+Target: riscv64-unknown-elf
+Configured with: /Users/he/riscv-gnu-toolchain/gcc/configure --target=riscv64-unknown-elf --prefix=/usr/local/opt/riscv-gnu-toolchain --disable-shared --disable-threads --enable-languages=c,c++ --with-pkgversion=g2ee5e430018 --with-system-zlib --enable-tls --with-newlib --with-sysroot=/usr/local/opt/riscv-gnu-toolchain/riscv64-unknown-elf --with-native-system-header-dir=/include --disable-libmudflap --disable-libssp --disable-libquadmath --disable-libgomp --disable-nls --disable-tm-clone-registry --src=/Users/he/riscv-gnu-toolchain/gcc --disable-multilib --with-abi=lp64d --with-arch=rv64imafdc --with-tune=rocket --with-isa-spec=2.2 'CFLAGS_FOR_TARGET=-Os   -mcmodel=medlow' 'CXXFLAGS_FOR_TARGET=-Os   -mcmodel=medlow'
+Thread model: single
+Supported LTO compression algorithms: zlib zstd
+gcc version 12.2.0 (g2ee5e430018) 
+COMPILER_PATH=/usr/local/opt/riscv-gnu-toolchain/libexec/gcc/riscv64-unknown-elf/12.2.0/:/usr/local/opt/riscv-gnu-toolchain/libexec/gcc/riscv64-unknown-elf/12.2.0/:/usr/local/opt/riscv-gnu-toolchain/libexec/gcc/riscv64-unknown-elf/:/usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/:/usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/:/usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/../../../../riscv64-unknown-elf/bin/
+LIBRARY_PATH=/usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/:/usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/../../../../riscv64-unknown-elf/lib/:/usr/local/opt/riscv-gnu-toolchain/riscv64-unknown-elf/lib/
+COLLECT_GCC_OPTIONS='-isysroot' '/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk' '-v' '-o' 'cmTC_ca4d2' '-mtune=rocket' '-march=rv64imafdc' '-mabi=lp64d' '-misa-spec=2.2' '-march=rv64imafdc' '-dumpdir' 'cmTC_ca4d2.'
+ /usr/local/opt/riscv-gnu-toolchain/libexec/gcc/riscv64-unknown-elf/12.2.0/collect2 -plugin /usr/local/opt/riscv-gnu-toolchain/libexec/gcc/riscv64-unknown-elf/12.2.0/liblto_plugin.so -plugin-opt=/usr/local/opt/riscv-gnu-toolchain/libexec/gcc/riscv64-unknown-elf/12.2.0/lto-wrapper -plugin-opt=-fresolution=/var/folders/6h/x918t_nn4pv_7jp4m2rp_yv80000gp/T//ccNgyK9D.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgloss -plugin-opt=-pass-through=-lgcc --sysroot=/usr/local/opt/riscv-gnu-toolchain/riscv64-unknown-elf -melf64lriscv -o cmTC_ca4d2 /usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/../../../../riscv64-unknown-elf/lib/crt0.o /usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/crtbegin.o -L/usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0 -L/usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/../../../../riscv64-unknown-elf/lib -L/usr/local/opt/riscv-gnu-toolchain/riscv64-unknown-elf/lib -search_paths_first -headerpad_max_install_names -v CMakeFiles/cmTC_ca4d2.dir/CMakeCCompilerABI.c.o -lgcc --start-group -lc -lgloss --end-group -lgcc /usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/crtend.o
+collect2 version 12.2.0
+/usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/../../../../riscv64-unknown-elf/bin/ld -plugin /usr/local/opt/riscv-gnu-toolchain/libexec/gcc/riscv64-unknown-elf/12.2.0/liblto_plugin.so -plugin-opt=/usr/local/opt/riscv-gnu-toolchain/libexec/gcc/riscv64-unknown-elf/12.2.0/lto-wrapper -plugin-opt=-fresolution=/var/folders/6h/x918t_nn4pv_7jp4m2rp_yv80000gp/T//ccNgyK9D.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgloss -plugin-opt=-pass-through=-lgcc --sysroot=/usr/local/opt/riscv-gnu-toolchain/riscv64-unknown-elf -melf64lriscv -o cmTC_ca4d2 /usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/../../../../riscv64-unknown-elf/lib/crt0.o /usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/crtbegin.o -L/usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0 -L/usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/../../../../riscv64-unknown-elf/lib -L/usr/local/opt/riscv-gnu-toolchain/riscv64-unknown-elf/lib -search_paths_first -headerpad_max_install_names -v CMakeFiles/cmTC_ca4d2.dir/CMakeCCompilerABI.c.o -lgcc --start-group -lc -lgloss --end-group -lgcc /usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/crtend.o
+/usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/../../../../riscv64-unknown-elf/bin/ld: Error: unable to disambiguate: -search_paths_first (did you mean --search_paths_first ?)
+collect2: error: ld returned 1 exit status
+ninja: build stopped: subcommand failed.
+
+
+
+
+Determining if the C compiler works failed with the following output:
+Change Dir: /Users/he/CLionProjects/xv6-riscv/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/local/bin/ninja cmTC_9a773 && [1/2] Building C object CMakeFiles/cmTC_9a773.dir/testCCompiler.c.o
+[2/2] Linking C executable cmTC_9a773
+FAILED: cmTC_9a773 
+: && /usr/local/opt/riscv-gnu-toolchain/bin/riscv64-unknown-elf-gcc -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/cmTC_9a773.dir/testCCompiler.c.o -o cmTC_9a773   && :
+/usr/local/opt/riscv-gnu-toolchain/lib/gcc/riscv64-unknown-elf/12.2.0/../../../../riscv64-unknown-elf/bin/ld: Error: unable to disambiguate: -search_paths_first (did you mean --search_paths_first ?)
+collect2: error: ld returned 1 exit status
+ninja: build stopped: subcommand failed.
+
+
+

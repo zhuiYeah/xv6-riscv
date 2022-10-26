@@ -202,13 +202,12 @@ w_pmpaddr0(uint64 x)
 
 // supervisor address translation and protection;
 // holds the address of the page table.
-//supervisor地址转换和保护；这是保存页表的地址。
-static inline void 
-w_satp(uint64 x)
+static inline void w_satp(uint64 x)
 {
   asm volatile("csrw satp, %0" : : "r" (x));
 }
 
+//返回satp寄存器，该寄存器保存页表的地址
 static inline uint64
 r_satp()
 {
@@ -224,8 +223,8 @@ w_mscratch(uint64 x)
 }
 
 // Supervisor Trap Cause
-static inline uint64
-r_scause()
+//返回scause寄存器，该寄存器储存陷入的原因
+static inline uint64 r_scause()
 {
   uint64 x;
   asm volatile("csrr %0, scause" : "=r" (x) );
@@ -375,3 +374,11 @@ typedef uint64 *pagetable_t; // 一个页表，指向512个PTEs。 这就是页�
 // that have the high bit set.
 //虚拟地址空间的最高位 256GB
 #define MAXVA (1L << (9 + 9 + 9 + 12 - 1))
+
+//来自lab4.2,读取fp指针的值，fp（frame pointer）为当前函数的栈顶指针
+static inline uint64 r_fp()
+{
+  uint64 x;
+  asm volatile("mv %0, s0" : "=r"(x));
+  return x;
+}
